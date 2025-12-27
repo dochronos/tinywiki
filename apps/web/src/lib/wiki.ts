@@ -10,7 +10,20 @@ export type WikiArticleMeta = {
   lastUpdated?: string;
 };
 
-const WIKI_DIR = path.join(process.cwd(), "src", "content", "wiki");
+function resolveWikiDir(): string {
+  const candidateA = path.join(process.cwd(), "src", "content", "wiki");
+  if (fs.existsSync(candidateA)) return candidateA;
+
+  const candidateB = path.join(process.cwd(), "apps", "web", "src", "content", "wiki");
+  if (fs.existsSync(candidateB)) return candidateB;
+
+  // helpful error for debugging
+  throw new Error(
+    `Wiki content directory not found. Checked:\n- ${candidateA}\n- ${candidateB}`
+  );
+}
+
+const WIKI_DIR = resolveWikiDir();
 
 export function getAllWikiArticles(): WikiArticleMeta[] {
   const files = fs.readdirSync(WIKI_DIR).filter((f) => f.endsWith(".mdx"));
@@ -20,7 +33,6 @@ export function getAllWikiArticles(): WikiArticleMeta[] {
     const raw = fs.readFileSync(fullPath, "utf8");
     const { data } = matter(raw);
 
-    // fallbacks to keep it robust
     const slug = (data.slug as string) ?? file.replace(/\.mdx$/, "");
     const title = (data.title as string) ?? slug;
 
@@ -33,33 +45,7 @@ export function getAllWikiArticles(): WikiArticleMeta[] {
     };
   });
 
-  // simple sort: lastUpdated desc if available
   return articles.sort((a, b) => (b.lastUpdated ?? "").localeCompare(a.lastUpdated ?? ""));
-}
-
-export function getWikiArticleBySlug(slug: string): { meta: WikiArticleMeta; filePath: string } {
-  const files = fs.readdirSync(WIKI_DIR).filter((f) => f.endsWith(".mdx"));
-
-  for (const file of files) {
-    const fullPath = path.join(WIKI_DIR, file);
-    const raw = fs.readFileSync(fullPath, "utf8");
-    const { data } = matter(raw);
-
-    const fileSlug = (data.slug as string) ?? file.replace(/\.mdx$/, "");
-    if (fileSlug === slug) {
-      const meta: WikiArticleMeta = {
-        title: (data.title as string) ?? slug,
-        slug: fileSlug,
-        section: data.section as string | undefined,
-        tags: data.tags as string[] | undefined,
-        lastUpdated: data.lastUpdated as string | undefined,
-      };
-
-      return { meta, filePath: fullPath };
-    }
-  }
-
-  throw new Error(`Wiki article not found: ${slug}`);
 }
 
 export function getAllWikiSlugs(): string[] {
