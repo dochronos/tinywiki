@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   const sections = [
     { title: "Energía solar", description: "Conceptos básicos, guías y checklist antes de comprar o instalar." },
@@ -10,12 +12,30 @@ export default function Home() {
   return (
     <main className="mx-auto max-w-5xl px-6 py-10">
       <header className="space-y-3">
-        <h1 className="text-3xl font-semibold tracking-tight">TinyWiki</h1>
-        <p className="text-base text-neutral-600">
-          Wiki minimalista de sustentabilidad y tiny houses (Argentina / LATAM). Contenido curado con fuentes + datos estructurados
-          (proveedores, referencias de precios) para análisis y dashboards.
-        </p>
-      </header>
+  <h1 className="text-3xl font-semibold tracking-tight">TinyWiki</h1>
+
+  <p className="text-base text-neutral-600">
+    Wiki minimalista de sustentabilidad y tiny houses (Argentina / LATAM). Contenido curado con fuentes + datos
+    estructurados (proveedores, referencias de precios) para análisis y dashboards.
+  </p>
+
+  <div className="flex flex-wrap gap-3 pt-1">
+    <Link
+      href="/wiki"
+      className="inline-flex items-center justify-center rounded-2xl border px-4 py-2 text-sm font-medium shadow-sm hover:bg-neutral-50"
+    >
+      Ver Wiki
+    </Link>
+
+    <Link
+      href="/providers"
+      className="inline-flex items-center justify-center rounded-2xl border px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+    >
+      Proveedores (próximo sprint)
+    </Link>
+  </div>
+</header>
+
 
       <section className="mt-10 grid gap-4 sm:grid-cols-2">
         {sections.map((s) => (
