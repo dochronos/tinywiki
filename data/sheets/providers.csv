@@ -1,0 +1,18 @@
+provider_id,provider_name,category,subcategory,province,city,website,whatsapp,email,price_level,notes,source_url,last_verified
+SOL-BA-001,Solar MDP,Solar,Paneles solares,Buenos Aires,Mar del Plata,https://solarmdp.wixsite.com/inicio,5492235697486,solarmdp@gmail.com,0,,https://solarmdp.wixsite.com/inicio,2025-12-30
+SOL-BA-002,Solar Systems,Solar,Paneles solares,Buenos Aires,Mar del Plata,https://solarsystems.com.ar/,5492235869440,ventas@solarsystems.com.ar,1,,https://solarsystems.com.ar/,2025-12-30
+SOL-BA-003,ABC Solar,Solar,Paneles Solares,Buenos Aires,Mar del Plata,https://abcsolar.com.ar/,5492236194942,info@abcsolar.com.ar,0,,https://abcsolar.com.ar/,2026-01-04
+SOL-BA-004,DG Servicios,Solar,Paneles Solares,Buenos Aires,Mar del Plata,https://dgservicios.ar/,5492236694890,info@gdservicios.ar,0,,https://dgservicios.ar/,2026-01-05
+SOL-BA-005,Antu Karu,Solar,Paneles Solares,Buenos Aires,Mar del Plata,https://antukaru.com/,5492236662121,comercial@antukaru.com,0,,https://antukaru.com/,2026-01-05
+SOL-BA-006,ACSol,Solar,Paneles Solares,Buenos Aires,Mar del Plata,https://www.acsol.com.ar/index.html,5492234265543,info@acsol.co.ar,0,,https://www.acsol.com.ar/index.html,2026-01-05
+SOL-BA-007,Kit Solar,Solar,Paneles Solares,Buenos Aires,Banfield,https://kit-solar.com.ar/,5491137739700,comercial@kit-solar.com.ar,1,,https://kit-solar.com.ar/,2026-01-06
+SOL-SF-008,Solarsol,Solar,Paneles Solares,Santa Fe,Rosario,https://solarsol.com.ar/,5493412113098,comercial@solarsol.com.ar,1,,https://solarsol.com.ar/,2026-01-06
+SOL-BA-009,Hissuma,Solar,Paneles Solares,Buenos Aires,Buenos Aires,https://www.hissuma-materiales.com.ar/,5491126134068,comercial@hissuma-materiales.com.ar,0,,https://www.hissuma-materiales.com.ar/,2026-01-06
+AER-BA.010,ST Charger,Eolico,Aerogeneradores,Buenos Aires,Buenos Aires,https://stcharger.com.ar/,5491122857511,info@stcharger.com.ar,0,,https://stcharger.com.ar/,2026-01-06
+CAL-BA-011,Nexum,Calefaccion,Termotanques,Buenos Aires,Buenos Aires,https://nexum.com.ar/,5491120550669,info@nexum.com.ar,1,,https://nexum.com.ar/,2026-01-06
+CON-BA-012,Steel Box,Viviendas,Construccion,Mar del Plata,Buenos Aires,https://steelbox.com.ar/,5492235055334,info@steelbox.com.ar,0,,https://steelbox.com.ar/,2026-01-08
+CON-BA-013,Neucon,Viviendas,Construccion,Mar del Plata,Buenos Aires,https://neucon.com.ar/,5492236809012,,0,,https://neucon.com.ar/,2026-01-08
+CON-BA-014,Open Viviendas,Viviendas,Construccion,Mar del Plata,Buenos Aires,https://viviendasopen.com/,5492235264844,opencomercialventas@gmail.com,0,,https://viviendasopen.com/,2026-01-08
+CON-BA-015,Constructora Torre Fuerte,Viviendas,Construccion,Mar del Plata,Buenos Aires,https://constructoratorrefuerte.com.ar/,549223999111,,0,,https://constructoratorrefuerte.com.ar/,2026-01-08
+CON-BA-016,Comaco,Viviendas,Construccion,Mar del Plata,Buenos Aires,https://www.comaco.com.ar/,5492235822062,recepcion@comaco.co.ar,0,,https://www.comaco.com.ar/,2026-01-08
+CON-BA-017,Movilhauss,Viviendas,Construccion,Mar del Plata,Buenos Aires,https://movilhauss.com/,5492236216699,movilhaussgmail.com,0,,https://movilhauss.com/,2026-01-08
