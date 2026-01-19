@@ -25,6 +25,17 @@ export default function ToolsPage() {
             Evalúa preparación básica (consumo, espacio, sol, objetivos) y obtiene un resultado orientativo.
           </div>
         </Link>
+
+        <Link
+          href="/tools/termotanque-readiness"
+          className="block rounded-2xl border p-5 shadow-sm hover:bg-neutral-50"
+        >
+          <div className="font-medium">Checklist: ¿Estoy listo para un termotanque solar?</div>
+          <div className="mt-1 text-sm text-neutral-600">
+            Evalúa consumo, espacio, sol y estado de la instalación antes de elegir un sistema térmico.
+          </div>
+        </Link>
+
       </section>
     </main>
   );
