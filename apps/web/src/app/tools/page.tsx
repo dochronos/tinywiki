@@ -36,6 +36,16 @@ export default function ToolsPage() {
           </div>
         </Link>
 
+        <Link
+          href="/tools/solar-calculator"
+          className="block rounded-2xl border p-5 shadow-sm hover:bg-neutral-50"
+        >
+          <div className="font-medium">Calculadora: estimación solar (Argentina)</div>
+          <div className="mt-1 text-sm text-neutral-600">
+            Estima un rango de kWp y paneles según consumo mensual, provincia y objetivo.
+          </div>
+        </Link>
+
       </section>
     </main>
   );
