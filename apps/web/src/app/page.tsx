@@ -31,8 +31,13 @@ export default function Home() {
       href="/providers"
       className="inline-flex items-center justify-center rounded-2xl border px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
     >
-      Proveedores (próximo sprint)
+      Proveedores
     </Link>
+
+    <Link href="/tools" className="underline">
+      Herramientas (checklists)
+    </Link>
+
   </div>
 </header>
 
