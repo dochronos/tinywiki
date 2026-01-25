@@ -2,9 +2,9 @@ import Link from "next/link";
 import SolarCalculator from "./SolarCalculator";
 
 export const metadata = {
-  title: "Calculadora Solar | TinyWiki",
+  title: "Calculadora solar en Argentina | TinyWiki",
   description:
-    "Estimación orientativa del tamaño de un sistema solar residencial en Argentina (rango de kWp y paneles).",
+    "Calculadora orientativa para estimar un rango de tamaño del sistema solar (kWp) y paneles según consumo mensual, provincia y objetivo.",
 };
 
 export default function SolarCalculatorPage() {
@@ -18,16 +18,20 @@ export default function SolarCalculatorPage() {
         </p>
 
         <div className="pt-2 text-sm">
-          <Link href="/tools" className="underline">
-            Todas las herramientas
-          </Link>
-          <span className="text-neutral-400"> · </span>
           <Link href="/tools/solar-readiness" className="underline">
             Checklist solar
           </Link>
           <span className="text-neutral-400"> · </span>
           <Link href="/providers" className="underline">
             Ver proveedores
+          </Link>
+          <span className="text-neutral-400"> · </span>
+          <Link href="/wiki" className="underline">
+            Wiki
+          </Link>
+          <span className="text-neutral-400"> · </span>
+          <Link href="/tools" className="underline">
+            Todas las herramientas
           </Link>
         </div>
       </header>
@@ -37,8 +41,8 @@ export default function SolarCalculatorPage() {
       </section>
 
       <footer className="mt-8 text-xs text-neutral-500">
-        Supuestos: horas solares promedio por provincia + factor de pérdidas conservador. Resultados expresados como rango
-        para evitar falsa precisión.
+        Supuestos: horas solares promedio por provincia + factor de pérdidas conservador. El resultado se expresa como
+        rango para evitar falsa precisión.
       </footer>
     </main>
   );

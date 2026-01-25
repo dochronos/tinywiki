@@ -2,9 +2,9 @@ import Link from "next/link";
 import SolarReadinessChecklist from "./SolarReadinessChecklist";
 
 export const metadata = {
-  title: "Checklist Solar | TinyWiki",
+  title: "Checklist de energía solar en Argentina | TinyWiki",
   description:
-    "Checklist interactiva para evaluar si estás listo para instalar energía solar en casa (Argentina/LATAM).",
+    "Checklist interactiva para evaluar si una vivienda en Argentina está preparada para instalar energía solar (consumo, espacio, sol y objetivos).",
 };
 
 export default function SolarReadinessPage() {
@@ -15,8 +15,8 @@ export default function SolarReadinessPage() {
           Checklist: ¿Estoy listo para energía solar?
         </h1>
         <p className="text-sm text-neutral-600">
-          Esta guía es orientativa. No reemplaza una evaluación técnica en sitio,
-          pero te ayuda a ordenar decisiones antes de avanzar.
+          Guía orientativa para ordenar decisiones antes de invertir en un sistema solar. No reemplaza una evaluación
+          técnica en sitio.
         </p>
 
         <div className="pt-2 text-sm">
@@ -26,6 +26,10 @@ export default function SolarReadinessPage() {
           <span className="text-neutral-400"> · </span>
           <Link href="/providers" className="underline">
             Ver proveedores
+          </Link>
+          <span className="text-neutral-400"> · </span>
+          <Link href="/wiki" className="underline">
+            Wiki
           </Link>
           <span className="text-neutral-400"> · </span>
           <Link href="/tools" className="underline">
@@ -39,9 +43,8 @@ export default function SolarReadinessPage() {
       </section>
 
       <footer className="mt-8 text-xs text-neutral-500">
-        Consejo: si tu objetivo principal es reducir costos, medí consumo y
-        hábitos primero. Si priorizás resiliencia ante cortes, enfocá el sistema
-        en almacenamiento y cargas críticas.
+        Consejo: si tu objetivo principal es reducir costos, medí consumo y hábitos primero. Si priorizás resiliencia ante
+        cortes, definí cargas críticas y estrategia de almacenamiento.
       </footer>
     </main>
   );

@@ -1,11 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
+import Link from "next/link";
 import ProvidersTable, { ProviderRow } from "./ProvidersTable";
 
 export const metadata = {
-  title: "Proveedores | TinyWiki",
+  title: "Proveedores de energía solar y tiny houses en Argentina | TinyWiki",
   description:
-    "Base consultable de proveedores locales (Argentina/LATAM) para energía solar, agua, aislación y construcción.",
+    "Base consultable de proveedores locales en Argentina (energía solar, solar térmica y construcción), con dataset para análisis y BI.",
 };
 
 function resolveProvidersCsvPath() {
@@ -111,8 +112,19 @@ export default function ProvidersPage() {
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">Proveedores</h1>
         <p className="text-sm text-neutral-600">
-          Dataset curado (fuente + última verificación). En Sprint 3 este mismo dataset alimentará un dashboard en Power BI.
+          Base consultable de proveedores locales en Argentina (fuente + última verificación). Este dataset también se usa
+          para análisis y BI (Power BI).
         </p>
+
+        <div className="pt-2 text-sm">
+          <Link href="/tools" className="underline">
+            Herramientas
+          </Link>
+          <span className="text-neutral-400"> · </span>
+          <Link href="/wiki" className="underline">
+            Wiki
+          </Link>
+        </div>
       </header>
 
       <section className="mt-6">
@@ -120,7 +132,7 @@ export default function ProvidersPage() {
       </section>
 
       <footer className="mt-8 text-xs text-neutral-500">
-        Nota: Esta lista es informativa. Verificá disponibilidad/condiciones directamente con cada proveedor.
+        Nota: esta lista es informativa. Verificá disponibilidad y condiciones directamente con cada proveedor.
       </footer>
     </main>
   );
