@@ -65,6 +65,10 @@ export default function Home() {
           <Link href="/tools" className="underline text-sm">
             Herramientas prácticas (checklists y calculadoras)
           </Link>
+
+          <Link href="/data" className="underline text-sm">
+            Datos y BI (Power BI)
+          </Link>
         </div>
       </header>
 
