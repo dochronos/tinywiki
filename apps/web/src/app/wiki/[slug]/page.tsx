@@ -43,10 +43,34 @@ export default async function WikiArticlePage({ params }: Props) {
   if (!fs.existsSync(filePath)) notFound();
 
   const raw = fs.readFileSync(filePath, "utf8");
-  const { content } = matter(raw);
+  const { content, data } = matter(raw);
+
+  const title = (data.title as string) ?? slug;
+  const lastUpdated = data.lastUpdated as string | undefined;
+
+  const articleUrl = `https://tinywiki.vercel.app/wiki/${slug}`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    url: articleUrl,
+    dateModified: lastUpdated ? new Date(lastUpdated).toISOString() : undefined,
+    inLanguage: "es-AR",
+    isPartOf: {
+      "@type": "WebSite",
+      name: "TinyWiki",
+      url: "https://tinywiki.vercel.app",
+    },
+  };
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <article className="prose max-w-none">
         <MDXRemote source={content} />
       </article>
