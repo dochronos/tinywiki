@@ -10,7 +10,6 @@ export const metadata = {
 };
 
 function resolveProvidersCsvPath() {
-  // Run from apps/web in dev & Vercel; but be safe in monorepo.
   const a = path.join(process.cwd(), "data", "sheets", "providers.csv");
   if (fs.existsSync(a)) return a;
 
@@ -24,8 +23,6 @@ function resolveProvidersCsvPath() {
 }
 
 function parseCsv(csv: string): ProviderRow[] {
-  // Minimal CSV parser: supports quoted fields and commas inside quotes.
-  // Assumes first line is header row.
   const lines = csv
     .split(/\r?\n/)
     .map((l) => l.trimEnd())
@@ -69,7 +66,6 @@ function splitCsvLine(line: string): string[] {
     const ch = line[i];
 
     if (ch === '"') {
-      // Handle escaped quotes ("")
       const next = line[i + 1];
       if (inQuotes && next === '"') {
         cur += '"';
@@ -98,7 +94,6 @@ export default function ProvidersPage() {
   const csv = fs.readFileSync(csvPath, "utf8");
   const providers = parseCsv(csv);
 
-  // Basic sort for UX: category > province > name
   const sorted = [...providers].sort((a, b) => {
     const c = a.category.localeCompare(b.category);
     if (c !== 0) return c;
@@ -124,8 +119,30 @@ export default function ProvidersPage() {
           <Link href="/wiki" className="underline">
             Wiki
           </Link>
+          <span className="text-neutral-400"> · </span>
+          <Link href="/providers-map" className="underline">
+            Ver mapa
+          </Link>
         </div>
       </header>
+
+      <section className="mt-6 rounded-2xl border p-5 shadow-sm">
+        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 className="text-base font-medium">Exploración geográfica</h2>
+            <p className="text-sm text-neutral-600">
+              También podés recorrer el dataset en una vista visual por ciudad y provincia.
+            </p>
+          </div>
+
+          <Link
+            href="/providers-map"
+            className="inline-flex items-center justify-center rounded-2xl border px-4 py-2 text-sm font-medium hover:bg-neutral-50"
+          >
+            Abrir mapa interactivo
+          </Link>
+        </div>
+      </section>
 
       <section className="mt-6">
         <ProvidersTable providers={sorted} />

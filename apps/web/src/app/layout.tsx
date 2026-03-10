@@ -20,7 +20,6 @@ export const metadata: Metadata = {
     description:
       "Wiki minimalista de sustentabilidad y tiny houses (Argentina / LATAM). Contenido curado con fuentes + datos estructurados para análisis y BI.",
     locale: "es_AR",
-
     images: [
       {
         url: "/og.png",
@@ -39,3 +38,15 @@ export const metadata: Metadata = {
     images: ["/og.png"],
   },
 };
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="es">
+      <body>{children}</body>
+    </html>
+  );
+}
