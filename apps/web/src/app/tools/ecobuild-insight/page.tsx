@@ -2,10 +2,18 @@
 
 import { useState } from "react";
 
+type ROI = {
+  label: string;
+  cost: number;
+  yearlySavings: number;
+  payback: number;
+};
+
 type Result = {
   consumption: number;
   cost: number;
   recommendations: string[];
+  roi: ROI[];
 };
 
 export default function EcoBuildInsightPage() {
@@ -28,7 +36,11 @@ export default function EcoBuildInsightPage() {
     if (windows === "double") consumption *= 0.85;
 
     const monthlyCost = (consumption / 12) * COST_PER_KWH;
+    const yearlyCost = monthlyCost * 12;
 
+    // -----------------------------
+    // Recommendations
+    // -----------------------------
     const recommendations: string[] = [];
 
     if (!insulation) {
@@ -49,16 +61,50 @@ export default function EcoBuildInsightPage() {
       );
     }
 
-    if (size > 120 && !insulation) {
-      recommendations.push(
-        "En viviendas grandes, el aislamiento tiene un impacto aún mayor en el ahorro energético."
-      );
+    // -----------------------------
+    // ROI calculations
+    // -----------------------------
+    const roi: ROI[] = [];
+
+    const SOLAR_COST = 4000;
+    const INSULATION_COST = 1500;
+    const WINDOWS_COST = 2000;
+
+    if (!solar) {
+      const savings = yearlyCost * 0.4;
+      roi.push({
+        label: "Paneles solares",
+        cost: SOLAR_COST,
+        yearlySavings: Math.round(savings),
+        payback: Math.round(SOLAR_COST / savings),
+      });
+    }
+
+    if (!insulation) {
+      const savings = yearlyCost * 0.25;
+      roi.push({
+        label: "Aislamiento térmico",
+        cost: INSULATION_COST,
+        yearlySavings: Math.round(savings),
+        payback: Math.round(INSULATION_COST / savings),
+      });
+    }
+
+    if (windows === "simple") {
+      const savings = yearlyCost * 0.15;
+      roi.push({
+        label: "Doble vidrio",
+        cost: WINDOWS_COST,
+        yearlySavings: Math.round(savings),
+        payback: Math.round(WINDOWS_COST / savings),
+      });
     }
 
     setResult({
       consumption: Math.round(consumption),
       cost: Math.round(monthlyCost),
       recommendations,
+      roi,
     });
   }
 
@@ -72,62 +118,50 @@ export default function EcoBuildInsightPage() {
 
       {/* FORM */}
       <div className="mt-10 space-y-6 border p-6 rounded-2xl">
-        <div>
-          <label className="block text-sm font-medium">
-            Tamaño de la vivienda (m²)
-          </label>
-          <input
-            type="number"
-            value={size}
-            onChange={(e) => setSize(Number(e.target.value))}
-            className="mt-2 w-full border rounded-lg p-2"
-          />
-        </div>
+        <input
+          type="number"
+          placeholder="Tamaño (m²)"
+          value={size}
+          onChange={(e) => setSize(Number(e.target.value))}
+          className="w-full border rounded-lg p-2"
+        />
 
-        <div>
-          <label className="block text-sm font-medium">Ciudad</label>
-          <select
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="mt-2 w-full border rounded-lg p-2"
-          >
-            <option value="buenos_aires">Buenos Aires</option>
-            <option value="cordoba">Córdoba</option>
-            <option value="mendoza">Mendoza</option>
-          </select>
-        </div>
+        <select
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          className="w-full border rounded-lg p-2"
+        >
+          <option value="buenos_aires">Buenos Aires</option>
+          <option value="cordoba">Córdoba</option>
+          <option value="mendoza">Mendoza</option>
+        </select>
 
-        <div className="flex items-center gap-2">
+        <label>
           <input
             type="checkbox"
             checked={insulation}
             onChange={(e) => setInsulation(e.target.checked)}
           />
-          <label>Aislamiento térmico</label>
-        </div>
+          Aislamiento térmico
+        </label>
 
-        <div className="flex items-center gap-2">
+        <label>
           <input
             type="checkbox"
             checked={solar}
             onChange={(e) => setSolar(e.target.checked)}
           />
-          <label>Paneles solares</label>
-        </div>
+          Paneles solares
+        </label>
 
-        <div>
-          <label className="block text-sm font-medium">
-            Tipo de ventanas
-          </label>
-          <select
-            value={windows}
-            onChange={(e) => setWindows(e.target.value)}
-            className="mt-2 w-full border rounded-lg p-2"
-          >
-            <option value="simple">Vidrio simple</option>
-            <option value="double">Doble vidrio</option>
-          </select>
-        </div>
+        <select
+          value={windows}
+          onChange={(e) => setWindows(e.target.value)}
+          className="w-full border rounded-lg p-2"
+        >
+          <option value="simple">Vidrio simple</option>
+          <option value="double">Doble vidrio</option>
+        </select>
 
         <button
           onClick={calculate}
@@ -139,33 +173,44 @@ export default function EcoBuildInsightPage() {
 
       {/* RESULT */}
       {result && (
-        <div className="mt-10 border p-6 rounded-2xl">
+        <div className="mt-10 border p-6 rounded-2xl space-y-6">
           <h2 className="text-xl font-semibold">Resultados</h2>
 
-          <p className="mt-4">
-            Consumo anual estimado:
-            <strong> {result.consumption} kWh</strong>
+          <p>
+            Consumo anual: <strong>{result.consumption} kWh</strong>
           </p>
 
-          <p className="mt-2">
-            Costo mensual estimado:
-            <strong> ${result.cost}</strong>
+          <p>
+            Costo mensual: <strong>${result.cost}</strong>
           </p>
 
-          {result.recommendations.length > 0 && (
-            <div className="mt-6">
-              <h3 className="text-lg font-semibold">Recomendaciones</h3>
+          {/* Recommendations */}
+          <div>
+            <h3 className="font-semibold">Recomendaciones</h3>
+            <ul className="mt-2 space-y-2">
+              {result.recommendations.map((r, i) => (
+                <li key={i} className="border p-2 rounded">
+                  {r}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-              <ul className="mt-3 space-y-2">
-                {result.recommendations.map((rec, index) => (
-                  <li
-                    key={index}
-                    className="border p-3 rounded-lg bg-neutral-50"
-                  >
-                    {rec}
-                  </li>
+          {/* ROI */}
+          {result.roi.length > 0 && (
+            <div>
+              <h3 className="font-semibold">Impacto económico</h3>
+
+              <div className="mt-3 space-y-3">
+                {result.roi.map((item, i) => (
+                  <div key={i} className="border p-3 rounded-lg">
+                    <p className="font-medium">{item.label}</p>
+                    <p>Costo estimado: ${item.cost}</p>
+                    <p>Ahorro anual: ${item.yearlySavings}</p>
+                    <p>Retorno: {item.payback} años</p>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
         </div>
