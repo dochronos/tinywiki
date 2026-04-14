@@ -37,6 +37,36 @@ function parseCSV(data: string): Provider[] {
     }));
 }
 
+// -----------------------------
+// Bar Component
+// -----------------------------
+function Bar({
+  label,
+  value,
+  max,
+}: {
+  label: string;
+  value: number;
+  max: number;
+}) {
+  const width = max > 0 ? (value / max) * 100 : 0;
+
+  return (
+    <div>
+      <div className="flex justify-between text-sm mb-1">
+        <span>{label}</span>
+        <span>{value}</span>
+      </div>
+      <div className="w-full bg-neutral-200 rounded-full h-3">
+        <div
+          className="bg-neutral-800 h-3 rounded-full"
+          style={{ width: `${width}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function DataExplorationPage() {
   // -----------------------------
   // Path resolution (robust)
@@ -49,9 +79,6 @@ export default function DataExplorationPage() {
     "sheets",
     "providers_clean.csv"
   );
-
-  // Debug opcional (podés borrarlo después)
-  // console.log("Reading CSV from:", filePath);
 
   // -----------------------------
   // Read + parse data
@@ -72,6 +99,9 @@ export default function DataExplorationPage() {
     (p) => p.last_verified && p.last_verified.trim() !== ""
   ).length;
 
+  // -----------------------------
+  // Group by province
+  // -----------------------------
   const byProvince: Record<string, number> = {};
 
   providers.forEach((p) => {
@@ -85,6 +115,25 @@ export default function DataExplorationPage() {
   });
 
   const topProvinces = Object.entries(byProvince)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
+  // -----------------------------
+  // Group by category
+  // -----------------------------
+  const byCategory: Record<string, number> = {};
+
+  providers.forEach((p) => {
+    const category = p.category?.trim() || "Unknown";
+
+    if (!byCategory[category]) {
+      byCategory[category] = 0;
+    }
+
+    byCategory[category]++;
+  });
+
+  const topCategories = Object.entries(byCategory)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5);
 
@@ -126,10 +175,11 @@ export default function DataExplorationPage() {
         </div>
       </div>
 
-      {/* Provinces */}
+      {/* Provinces Section */}
       <div className="mt-12">
         <h2 className="text-xl font-semibold">Top provinces</h2>
 
+        {/* List */}
         <ul className="mt-4 space-y-2">
           {topProvinces.map(([province, count]) => (
             <li
@@ -141,6 +191,34 @@ export default function DataExplorationPage() {
             </li>
           ))}
         </ul>
+
+        {/* Chart */}
+        <div className="mt-8 space-y-4">
+          {topProvinces.map(([province, count]) => (
+            <Bar
+              key={province}
+              label={province}
+              value={count}
+              max={topProvinces[0]?.[1] || 0}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Categories Section */}
+      <div className="mt-12">
+        <h2 className="text-xl font-semibold">Top categories</h2>
+
+        <div className="mt-6 space-y-4">
+          {topCategories.map(([category, count]) => (
+            <Bar
+              key={category}
+              label={category}
+              value={count}
+              max={topCategories[0]?.[1] || 0}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Links */}
