@@ -2,6 +2,12 @@
 
 import { useState } from "react";
 
+type Result = {
+  consumption: number;
+  cost: number;
+  recommendations: string[];
+};
+
 export default function EcoBuildInsightPage() {
   const [size, setSize] = useState<number>(0);
   const [city, setCity] = useState("buenos_aires");
@@ -9,10 +15,7 @@ export default function EcoBuildInsightPage() {
   const [solar, setSolar] = useState(false);
   const [windows, setWindows] = useState("simple");
 
-  const [result, setResult] = useState<null | {
-    consumption: number;
-    cost: number;
-  }>(null);
+  const [result, setResult] = useState<Result | null>(null);
 
   function calculate() {
     const BASE_KWH_PER_M2 = 50;
@@ -20,16 +23,42 @@ export default function EcoBuildInsightPage() {
 
     let consumption = size * BASE_KWH_PER_M2;
 
-    // Ajustes
     if (insulation) consumption *= 0.75;
     if (solar) consumption *= 0.6;
     if (windows === "double") consumption *= 0.85;
 
     const monthlyCost = (consumption / 12) * COST_PER_KWH;
 
+    const recommendations: string[] = [];
+
+    if (!insulation) {
+      recommendations.push(
+        "Agregar aislamiento térmico puede reducir pérdidas de energía en ~25%."
+      );
+    }
+
+    if (!solar) {
+      recommendations.push(
+        "Instalar paneles solares puede reducir el consumo de la red eléctrica."
+      );
+    }
+
+    if (windows === "simple") {
+      recommendations.push(
+        "Cambiar a doble vidrio mejora la eficiencia energética del hogar."
+      );
+    }
+
+    if (size > 120 && !insulation) {
+      recommendations.push(
+        "En viviendas grandes, el aislamiento tiene un impacto aún mayor en el ahorro energético."
+      );
+    }
+
     setResult({
       consumption: Math.round(consumption),
       cost: Math.round(monthlyCost),
+      recommendations,
     });
   }
 
@@ -38,16 +67,14 @@ export default function EcoBuildInsightPage() {
       <h1 className="text-3xl font-bold">EcoBuild Insight</h1>
 
       <p className="mt-4 text-neutral-600">
-        Estimate your home´s energy consumption and discover potential savings
-        from sustainable improvements.
+        Estimá el consumo energético de tu vivienda y descubrí cómo reducir costos con mejoras sustentables.
       </p>
 
       {/* FORM */}
       <div className="mt-10 space-y-6 border p-6 rounded-2xl">
-        {/* Size */}
         <div>
           <label className="block text-sm font-medium">
-            House size (m²)
+            Tamaño de la vivienda (m²)
           </label>
           <input
             type="number"
@@ -57,9 +84,8 @@ export default function EcoBuildInsightPage() {
           />
         </div>
 
-        {/* City */}
         <div>
-          <label className="block text-sm font-medium">City</label>
+          <label className="block text-sm font-medium">Ciudad</label>
           <select
             value={city}
             onChange={(e) => setCity(e.target.value)}
@@ -71,64 +97,77 @@ export default function EcoBuildInsightPage() {
           </select>
         </div>
 
-        {/* Insulation */}
         <div className="flex items-center gap-2">
           <input
             type="checkbox"
             checked={insulation}
             onChange={(e) => setInsulation(e.target.checked)}
           />
-          <label>Thermal insulation</label>
+          <label>Aislamiento térmico</label>
         </div>
 
-        {/* Solar */}
         <div className="flex items-center gap-2">
           <input
             type="checkbox"
             checked={solar}
             onChange={(e) => setSolar(e.target.checked)}
           />
-          <label>Solar panels</label>
+          <label>Paneles solares</label>
         </div>
 
-        {/* Windows */}
         <div>
           <label className="block text-sm font-medium">
-            Window type
+            Tipo de ventanas
           </label>
           <select
             value={windows}
             onChange={(e) => setWindows(e.target.value)}
             className="mt-2 w-full border rounded-lg p-2"
           >
-            <option value="simple">Single glazing</option>
-            <option value="double">Double glazing</option>
+            <option value="simple">Vidrio simple</option>
+            <option value="double">Doble vidrio</option>
           </select>
         </div>
 
-        {/* Button */}
         <button
           onClick={calculate}
           className="w-full bg-black text-white py-2 rounded-xl"
         >
-          Calculate
+          Calcular
         </button>
       </div>
 
       {/* RESULT */}
       {result && (
         <div className="mt-10 border p-6 rounded-2xl">
-          <h2 className="text-xl font-semibold">Results</h2>
+          <h2 className="text-xl font-semibold">Resultados</h2>
 
           <p className="mt-4">
-            Estimated annual consumption:
+            Consumo anual estimado:
             <strong> {result.consumption} kWh</strong>
           </p>
 
           <p className="mt-2">
-            Estimated monthly cost:
+            Costo mensual estimado:
             <strong> ${result.cost}</strong>
           </p>
+
+          {result.recommendations.length > 0 && (
+            <div className="mt-6">
+              <h3 className="text-lg font-semibold">Recomendaciones</h3>
+
+              <ul className="mt-3 space-y-2">
+                {result.recommendations.map((rec, index) => (
+                  <li
+                    key={index}
+                    className="border p-3 rounded-lg bg-neutral-50"
+                  >
+                    {rec}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </main>
