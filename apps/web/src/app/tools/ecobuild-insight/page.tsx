@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 type ROI = {
@@ -31,6 +32,7 @@ export default function EcoBuildInsightPage() {
 
     let consumption = size * BASE_KWH_PER_M2;
 
+    // Efficiency adjustments
     if (insulation) consumption *= 0.75;
     if (solar) consumption *= 0.6;
     if (windows === "double") consumption *= 0.85;
@@ -72,31 +74,34 @@ export default function EcoBuildInsightPage() {
 
     if (!solar) {
       const savings = yearlyCost * 0.4;
+
       roi.push({
         label: "Paneles solares",
         cost: SOLAR_COST,
         yearlySavings: Math.round(savings),
-        payback: Math.round(SOLAR_COST / savings),
+        payback: Math.max(1, Math.round(SOLAR_COST / savings)),
       });
     }
 
     if (!insulation) {
       const savings = yearlyCost * 0.25;
+
       roi.push({
         label: "Aislamiento térmico",
         cost: INSULATION_COST,
         yearlySavings: Math.round(savings),
-        payback: Math.round(INSULATION_COST / savings),
+        payback: Math.max(1, Math.round(INSULATION_COST / savings)),
       });
     }
 
     if (windows === "simple") {
       const savings = yearlyCost * 0.15;
+
       roi.push({
         label: "Doble vidrio",
         cost: WINDOWS_COST,
         yearlySavings: Math.round(savings),
-        payback: Math.round(WINDOWS_COST / savings),
+        payback: Math.max(1, Math.round(WINDOWS_COST / savings)),
       });
     }
 
@@ -110,87 +115,125 @@ export default function EcoBuildInsightPage() {
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-12">
-      <h1 className="text-3xl font-bold">EcoBuild Insight</h1>
+      {/* HERO */}
+      <section>
+        <h1 className="text-3xl font-bold">EcoBuild Insight</h1>
 
-      <p className="mt-4 text-neutral-600">
-        Estimá el consumo energético de tu vivienda y descubrí cómo reducir costos con mejoras sustentables.
-      </p>
+        <p className="mt-4 text-neutral-600">
+          Estimá el consumo energético de tu vivienda y descubrí cómo reducir
+          costos con mejoras sustentables.
+        </p>
+      </section>
 
       {/* FORM */}
-      <div className="mt-10 space-y-6 border p-6 rounded-2xl">
-        <input
-          type="number"
-          placeholder="Tamaño (m²)"
-          value={size}
-          onChange={(e) => setSize(Number(e.target.value))}
-          className="w-full border rounded-lg p-2"
-        />
+      <section className="mt-10 rounded-2xl border p-6">
+        <div className="space-y-6">
+          <div>
+            <label className="mb-2 block text-sm font-medium">
+              Tamaño de la vivienda (m²)
+            </label>
 
-        <select
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          className="w-full border rounded-lg p-2"
-        >
-          <option value="buenos_aires">Buenos Aires</option>
-          <option value="cordoba">Córdoba</option>
-          <option value="mendoza">Mendoza</option>
-        </select>
+            <input
+              type="number"
+              placeholder="Ej: 80"
+              value={size}
+              onChange={(e) => setSize(Number(e.target.value))}
+              className="w-full rounded-lg border p-2"
+            />
+          </div>
 
-        <label>
-          <input
-            type="checkbox"
-            checked={insulation}
-            onChange={(e) => setInsulation(e.target.checked)}
-          />
-          Aislamiento térmico
-        </label>
+          <div>
+            <label className="mb-2 block text-sm font-medium">
+              Ciudad
+            </label>
 
-        <label>
-          <input
-            type="checkbox"
-            checked={solar}
-            onChange={(e) => setSolar(e.target.checked)}
-          />
-          Paneles solares
-        </label>
+            <select
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="w-full rounded-lg border p-2"
+            >
+              <option value="buenos_aires">Buenos Aires</option>
+              <option value="cordoba">Córdoba</option>
+              <option value="mendoza">Mendoza</option>
+            </select>
+          </div>
 
-        <select
-          value={windows}
-          onChange={(e) => setWindows(e.target.value)}
-          className="w-full border rounded-lg p-2"
-        >
-          <option value="simple">Vidrio simple</option>
-          <option value="double">Doble vidrio</option>
-        </select>
+          <div className="space-y-3">
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={insulation}
+                onChange={(e) => setInsulation(e.target.checked)}
+              />
 
-        <button
-          onClick={calculate}
-          className="w-full bg-black text-white py-2 rounded-xl"
-        >
-          Calcular
-        </button>
-      </div>
+              <span>Aislamiento térmico</span>
+            </label>
 
-      {/* RESULT */}
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={solar}
+                onChange={(e) => setSolar(e.target.checked)}
+              />
+
+              <span>Paneles solares</span>
+            </label>
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-medium">
+              Tipo de ventanas
+            </label>
+
+            <select
+              value={windows}
+              onChange={(e) => setWindows(e.target.value)}
+              className="w-full rounded-lg border p-2"
+            >
+              <option value="simple">Vidrio simple</option>
+              <option value="double">Doble vidrio</option>
+            </select>
+          </div>
+
+          <button
+            onClick={calculate}
+            className="w-full rounded-xl bg-black py-3 text-white transition hover:opacity-90"
+          >
+            Calcular
+          </button>
+        </div>
+      </section>
+
+      {/* RESULTS */}
       {result && (
-        <div className="mt-10 border p-6 rounded-2xl space-y-6">
-          <h2 className="text-xl font-semibold">Resultados</h2>
+        <section className="mt-10 space-y-6 rounded-2xl border p-6">
+          <div>
+            <h2 className="text-xl font-semibold">Resultados</h2>
 
-          <p>
-            Consumo anual: <strong>{result.consumption} kWh</strong>
-          </p>
+            <div className="mt-4 space-y-2">
+              <p>
+                Consumo anual estimado:
+                <strong> {result.consumption} kWh</strong>
+              </p>
 
-          <p>
-            Costo mensual: <strong>${result.cost}</strong>
-          </p>
+              <p>
+                Costo mensual estimado:
+                <strong> ${result.cost}</strong>
+              </p>
+            </div>
+          </div>
 
           {/* Recommendations */}
           <div>
             <h3 className="font-semibold">Recomendaciones</h3>
-            <ul className="mt-2 space-y-2">
-              {result.recommendations.map((r, i) => (
-                <li key={i} className="border p-2 rounded">
-                  {r}
+
+            <ul className="mt-3 space-y-2">
+              {result.recommendations.map((recommendation, index) => (
+                <li
+                  key={index}
+                  className="rounded-lg border bg-neutral-50 p-3"
+                >
+                  {recommendation}
                 </li>
               ))}
             </ul>
@@ -202,18 +245,43 @@ export default function EcoBuildInsightPage() {
               <h3 className="font-semibold">Impacto económico</h3>
 
               <div className="mt-3 space-y-3">
-                {result.roi.map((item, i) => (
-                  <div key={i} className="border p-3 rounded-lg">
+                {result.roi.map((item, index) => (
+                  <div
+                    key={index}
+                    className="rounded-lg border p-4"
+                  >
                     <p className="font-medium">{item.label}</p>
-                    <p>Costo estimado: ${item.cost}</p>
-                    <p>Ahorro anual: ${item.yearlySavings}</p>
-                    <p>Retorno: {item.payback} años</p>
+
+                    <div className="mt-2 space-y-1 text-sm text-neutral-700">
+                      <p>Costo estimado: ${item.cost}</p>
+                      <p>Ahorro anual: ${item.yearlySavings}</p>
+                      <p>Retorno estimado: {item.payback} años</p>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
           )}
-        </div>
+
+          {/* CTA */}
+          <div className="border-t pt-6">
+            <h3 className="text-lg font-semibold">
+              ¿Querés un análisis personalizado?
+            </h3>
+
+            <p className="mt-2 text-neutral-600">
+              TinyWiki puede ayudarte a evaluar mejoras reales para tu vivienda,
+              incluyendo ahorro estimado y retorno de inversión.
+            </p>
+
+            <Link
+              href="/services/energy-analysis"
+              className="mt-4 inline-block rounded-xl bg-black px-5 py-3 text-white transition hover:opacity-90"
+            >
+              Solicitar análisis
+            </Link>
+          </div>
+        </section>
       )}
     </main>
   );
