@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,6 +24,7 @@ export const metadata: Metadata = {
     description:
       "Wiki minimalista de sustentabilidad y tiny houses (Argentina / LATAM). Contenido curado con fuentes + datos estructurados para análisis y BI.",
     locale: "es_AR",
+
     images: [
       {
         url: "/og.png",
@@ -33,20 +38,28 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "TinyWiki",
+
     description:
       "Wiki minimalista de sustentabilidad y tiny houses (Argentina / LATAM).",
+
     images: ["/og.png"],
   },
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body className="bg-white text-neutral-900 antialiased">
+        <Navbar />
+
+        <main>{children}</main>
+
+        <Footer />
+      </body>
     </html>
   );
 }

@@ -1,94 +1,165 @@
 import Link from "next/link";
 
-export const metadata = {
-  title: "TinyWiki | Sustentabilidad, energía solar y tiny houses en Argentina",
-  description:
-    "Guías prácticas, checklists y herramientas para tomar decisiones informadas sobre energía solar, tiny houses y vida off-grid en Argentina.",
-};
-
-export default function Home() {
-  const sections = [
-    {
-      title: "Energía solar",
-      description:
-        "Conceptos básicos, guías y checklists para evaluar si una vivienda en Argentina está preparada para energía solar.",
-    },
-    {
-      title: "Construcción Tiny Houses",
-      description:
-        "Materiales, aislación, humedad, estructura y decisiones clave para construcciones pequeñas y eficientes.",
-    },
-    {
-      title: "Seguridad",
-      description:
-        "Seguridad práctica para entornos rurales y viviendas autosuficientes.",
-    },
-    {
-      title: "Agua y saneamiento",
-      description:
-        "Opciones off-grid, tradeoffs y mantenimiento para sistemas de agua y saneamiento.",
-    },
-    {
-      title: "Recursos y proveedores",
-      description:
-        "Base consultable de proveedores locales + datasets estructurados para análisis y BI.",
-    },
-  ];
-
+export default function HomePage() {
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-semibold tracking-tight">TinyWiki</h1>
-
-        <p className="text-base text-neutral-600">
-          Recurso práctico de sustentabilidad enfocado en Argentina y LATAM.
-          Combina contenido curado con herramientas y datos estructurados para
-          ayudar a tomar mejores decisiones sobre energía solar, tiny houses y
-          soluciones off-grid.
+    <main className="mx-auto max-w-6xl px-6 py-16">
+      {/* Hero */}
+      <section className="max-w-3xl">
+        <p className="text-sm font-medium uppercase tracking-wide text-neutral-500">
+          TinyWiki
         </p>
 
-        <div className="flex flex-wrap gap-3 pt-1">
+        <h1 className="mt-4 text-5xl font-bold tracking-tight text-neutral-900">
+          Herramientas y datos sobre sustentabilidad en Argentina
+        </h1>
+
+        <p className="mt-6 text-lg leading-8 text-neutral-600">
+          TinyWiki combina contenido educativo, herramientas interactivas,
+          datasets y análisis para ayudar a tomar mejores decisiones sobre
+          energía solar, eficiencia energética y vida off-grid.
+        </p>
+
+        <div className="mt-8 flex flex-wrap gap-4">
           <Link
-            href="/wiki"
-            className="inline-flex items-center justify-center rounded-2xl border px-4 py-2 text-sm font-medium shadow-sm hover:bg-neutral-50"
+            href="/tools"
+            className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
           >
-            Ver Wiki
+            Explorar herramientas
           </Link>
 
           <Link
-            href="/providers"
-            className="inline-flex items-center justify-center rounded-2xl border px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+            href="/services/energy-analysis"
+            className="rounded-xl border px-5 py-3 text-sm font-medium transition hover:bg-neutral-100"
           >
-            Proveedores
-          </Link>
-
-          <Link href="/tools" className="underline text-sm">
-            Herramientas prácticas (checklists y calculadoras)
-          </Link>
-
-          <Link href="/data" className="underline text-sm">
-            Datos y BI (Power BI)
+            Ver servicios
           </Link>
         </div>
-      </header>
-
-      <section className="mt-10 grid gap-4 sm:grid-cols-2">
-        {sections.map((s) => (
-          <div key={s.title} className="rounded-2xl border p-5 shadow-sm">
-            <h2 className="text-lg font-medium">{s.title}</h2>
-            <p className="mt-2 text-sm text-neutral-600">{s.description}</p>
-          </div>
-        ))}
       </section>
 
-      <section className="mt-10 rounded-2xl border p-5">
-        <h2 className="text-lg font-medium">Estado del proyecto</h2>
-        <ul className="mt-3 list-disc pl-5 text-sm text-neutral-700 space-y-1">
-          <li>Sprint 1: sitio alpha + estructura wiki + primeros artículos</li>
-          <li>Sprint 2: base consultable de proveedores + dataset estructurado</li>
-          <li>Sprint 3: dashboard de Power BI conectado al dataset</li>
-          <li>Sprint 4–6: herramientas interactivas (checklists y calculadora solar)</li>
-        </ul>
+      {/* Platform Sections */}
+      <section className="mt-20">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {/* Wiki */}
+          <Link
+            href="/wiki"
+            className="rounded-2xl border p-6 transition hover:bg-neutral-50"
+          >
+            <h2 className="text-xl font-semibold">Wiki</h2>
+
+            <p className="mt-3 text-sm leading-6 text-neutral-600">
+              Guías y contenido educativo sobre energía solar, tiny houses
+              y sustentabilidad en Argentina.
+            </p>
+          </Link>
+
+          {/* Tools */}
+          <Link
+            href="/tools"
+            className="rounded-2xl border p-6 transition hover:bg-neutral-50"
+          >
+            <h2 className="text-xl font-semibold">Herramientas</h2>
+
+            <p className="mt-3 text-sm leading-6 text-neutral-600">
+              Checklists, calculadoras y simuladores para evaluar mejoras
+              energéticas y costos.
+            </p>
+          </Link>
+
+          {/* Providers */}
+          <Link
+            href="/providers"
+            className="rounded-2xl border p-6 transition hover:bg-neutral-50"
+          >
+            <h2 className="text-xl font-semibold">Proveedores</h2>
+
+            <p className="mt-3 text-sm leading-6 text-neutral-600">
+              Dataset estructurado de proveedores relacionados con energía
+              solar y soluciones off-grid.
+            </p>
+          </Link>
+
+          {/* Dataset */}
+          <Link
+            href="/dataset"
+            className="rounded-2xl border p-6 transition hover:bg-neutral-50"
+          >
+            <h2 className="text-xl font-semibold">Dataset</h2>
+
+            <p className="mt-3 text-sm leading-6 text-neutral-600">
+              Exploración, documentación y transparencia sobre los datos
+              utilizados en TinyWiki.
+            </p>
+          </Link>
+
+          {/* Services */}
+          <Link
+            href="/services/energy-analysis"
+            className="rounded-2xl border p-6 transition hover:bg-neutral-50"
+          >
+            <h2 className="text-xl font-semibold">Servicios</h2>
+
+            <p className="mt-3 text-sm leading-6 text-neutral-600">
+              Evaluaciones energéticas orientativas para viviendas y
+              recomendaciones enfocadas en ahorro y eficiencia.
+            </p>
+          </Link>
+
+          {/* GitHub */}
+          <a
+            href="https://github.com/dochronos/tinywiki"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-2xl border p-6 transition hover:bg-neutral-50"
+          >
+            <h2 className="text-xl font-semibold">GitHub</h2>
+
+            <p className="mt-3 text-sm leading-6 text-neutral-600">
+              Repositorio público con código, datasets y desarrollo
+              incremental del proyecto.
+            </p>
+          </a>
+        </div>
+      </section>
+
+      {/* Why TinyWiki */}
+      <section className="mt-24 max-w-4xl">
+        <h2 className="text-3xl font-bold tracking-tight">
+          Un proyecto orientado a decisiones reales
+        </h2>
+
+        <p className="mt-6 text-lg leading-8 text-neutral-600">
+          TinyWiki busca transformar información compleja en herramientas
+          prácticas y accesibles para personas interesadas en reducir consumo
+          energético, mejorar eficiencia y explorar alternativas sustentables.
+        </p>
+      </section>
+
+      {/* CTA */}
+      <section className="mt-24 rounded-3xl border bg-neutral-50 p-10">
+        <h2 className="text-3xl font-bold tracking-tight">
+          Empezá a explorar TinyWiki
+        </h2>
+
+        <p className="mt-4 max-w-2xl text-neutral-600">
+          Descubrí herramientas, datasets y recursos para entender mejor
+          el impacto energético de una vivienda.
+        </p>
+
+        <div className="mt-8 flex flex-wrap gap-4">
+          <Link
+            href="/tools/ecobuild-insight"
+            className="rounded-xl bg-black px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+          >
+            Abrir EcoBuild Insight
+          </Link>
+
+          <Link
+            href="/providers-map"
+            className="rounded-xl border px-5 py-3 text-sm font-medium transition hover:bg-neutral-100"
+          >
+            Ver mapa de proveedores
+          </Link>
+        </div>
       </section>
     </main>
   );
