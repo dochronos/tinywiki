@@ -8,6 +8,12 @@ import {
   type CityKey,
 } from "@/lib/energy/cityFactors";
 
+import {
+  generateSummary,
+  getEnergyStatus,
+  getPriorityLabel,
+} from "@/lib/energy/recommendations";
+
 type ROI = {
   label: string;
   cost: number;
@@ -24,6 +30,11 @@ type Result = {
   score: number;
   efficiency: string;
   cityLabel: string;
+
+  summary: string;
+  priority: string;
+  status: string;
+  potentialSavings: number;
 };
 
 export default function EcoBuildInsightPage() {
@@ -168,8 +179,31 @@ export default function EcoBuildInsightPage() {
       efficiency = "Media";
     }
 
+    // -----------------------------
+    // Report helpers
+    // -----------------------------
+    const summary = generateSummary({
+      insulation,
+      solar,
+      windows,
+    });
+
+    const priority =
+      getPriorityLabel(score);
+
+    const status =
+      getEnergyStatus(score);
+
+    const potentialSavings =
+      roi.reduce(
+        (total, item) =>
+          total + item.yearlySavings,
+        0
+      );
+
     setResult({
       consumption: Math.round(consumption),
+
       cost: Math.round(monthlyCost),
 
       recommendations,
@@ -178,6 +212,11 @@ export default function EcoBuildInsightPage() {
       score,
       efficiency,
       cityLabel: selectedCity.label,
+
+      summary,
+      priority,
+      status,
+      potentialSavings,
     });
   }
 
@@ -358,6 +397,50 @@ export default function EcoBuildInsightPage() {
             </div>
           </div>
 
+          {/* Energy Report */}
+          <div className="rounded-2xl border bg-neutral-50 p-6">
+            <h3 className="text-lg font-semibold">
+              Resumen del análisis
+            </h3>
+
+            <p className="mt-3 leading-7 text-neutral-700">
+              {result.summary}
+            </p>
+
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              <div className="rounded-xl border bg-white p-4">
+                <p className="text-sm text-neutral-500">
+                  Estado energético
+                </p>
+
+                <p className="mt-2 text-lg font-semibold">
+                  {result.status}
+                </p>
+              </div>
+
+              <div className="rounded-xl border bg-white p-4">
+                <p className="text-sm text-neutral-500">
+                  Prioridad de mejora
+                </p>
+
+                <p className="mt-2 text-lg font-semibold">
+                  {result.priority}
+                </p>
+              </div>
+
+              <div className="rounded-xl border bg-white p-4">
+                <p className="text-sm text-neutral-500">
+                  Ahorro potencial anual
+                </p>
+
+                <p className="mt-2 text-lg font-semibold">
+                  $
+                  {result.potentialSavings}
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Recommendations */}
           <div>
             <h3 className="font-semibold">
@@ -366,7 +449,10 @@ export default function EcoBuildInsightPage() {
 
             <ul className="mt-3 space-y-2">
               {result.recommendations.map(
-                (recommendation, index) => (
+                (
+                  recommendation,
+                  index
+                ) => (
                   <li
                     key={index}
                     className="rounded-lg border bg-neutral-50 p-3"
