@@ -1,0 +1,41 @@
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  button {
+    display: none !important;
+  }
+
+  nav {
+    display: none !important;
+  }
+
+  footer {
+    display: none !important;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  main {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  section {
+    break-inside: avoid;
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+
+  .print-spacing {
+    margin-top: 2rem;
+  }
+}

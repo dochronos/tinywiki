@@ -221,7 +221,7 @@ export default function EcoBuildInsightPage() {
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-12">
+    <main className="mx-auto max-w-3xl px-6 py-12 print-spacing">
       {/* HERO */}
       <section>
         <h1 className="text-3xl font-bold">
@@ -504,6 +504,23 @@ export default function EcoBuildInsightPage() {
               </div>
             </div>
           )}
+
+          {/* Download Report */}
+          <div className="rounded-2xl border bg-neutral-50 p-6">
+            <h3 className="text-lg font-semibold">
+              Descargar reporte energético
+            </h3>
+
+            <p className="mt-2 text-neutral-600">
+              Exportá este análisis para guardarlo, compartirlo o utilizarlo como referencia para futuras mejoras.
+            </p>
+
+            <button
+              onClick={() => window.print()}
+              className="mt-4 rounded-xl bg-black px-5 py-3 text-white transition hover:opacity-90">
+              Descargar PDF
+            </button>
+          </div>
 
           {/* CTA */}
           <div className="border-t pt-6">
