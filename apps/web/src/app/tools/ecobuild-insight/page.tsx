@@ -14,6 +14,11 @@ import {
   getPriorityLabel,
 } from "@/lib/energy/recommendations";
 
+import {
+  getEnergyProfile,
+  getMainRecommendation,
+} from "@/lib/energy/insights";
+
 type ROI = {
   label: string;
   cost: number;
@@ -35,13 +40,21 @@ type Result = {
   priority: string;
   status: string;
   potentialSavings: number;
+
+  energyProfile: string;
+  mainRecommendation: string;
+  housingLabel: string;
 };
 
 export default function EcoBuildInsightPage() {
-  const [size, setSize] = useState<number>(0);
+  const [size, setSize] =
+    useState<number>(0);
 
   const [city, setCity] =
     useState<CityKey>("buenos_aires");
+
+  const [housingType, setHousingType] =
+    useState("familiar");
 
   const [insulation, setInsulation] =
     useState(false);
@@ -59,29 +72,52 @@ export default function EcoBuildInsightPage() {
     const BASE_KWH_PER_M2 = 50;
     const COST_PER_KWH = 0.15;
 
-    const selectedCity = cityFactors[city];
+    const selectedCity =
+      cityFactors[city];
+
+    const housingLabels = {
+      tiny: "Tiny house",
+      small: "Casa pequeña",
+      familiar: "Casa familiar",
+    };
 
     let consumption =
       size *
       BASE_KWH_PER_M2 *
       selectedCity.factor;
 
+    // Housing adjustments
+    if (housingType === "tiny") {
+      consumption *= 0.7;
+    }
+
+    if (housingType === "small") {
+      consumption *= 0.9;
+    }
+
     // Efficiency adjustments
-    if (insulation) consumption *= 0.75;
+    if (insulation) {
+      consumption *= 0.75;
+    }
 
-    if (solar) consumption *= 0.6;
+    if (solar) {
+      consumption *= 0.6;
+    }
 
-    if (windows === "double") consumption *= 0.85;
+    if (windows === "double") {
+      consumption *= 0.85;
+    }
 
     const monthlyCost =
-      (consumption / 12) * COST_PER_KWH;
+      (consumption / 12) *
+      COST_PER_KWH;
 
-    const yearlyCost = monthlyCost * 12;
+    const yearlyCost =
+      monthlyCost * 12;
 
-    // -----------------------------
     // Recommendations
-    // -----------------------------
-    const recommendations: string[] = [];
+    const recommendations: string[] =
+      [];
 
     if (!insulation) {
       recommendations.push(
@@ -101,9 +137,7 @@ export default function EcoBuildInsightPage() {
       );
     }
 
-    // -----------------------------
-    // ROI calculations
-    // -----------------------------
+    // ROI
     const roi: ROI[] = [];
 
     const SOLAR_COST = 4000;
@@ -119,109 +153,168 @@ export default function EcoBuildInsightPage() {
       roi.push({
         label: "Paneles solares",
         cost: SOLAR_COST,
-        yearlySavings: Math.round(savings),
+        yearlySavings:
+          Math.round(savings),
 
         payback: Math.max(
           1,
-          Math.round(SOLAR_COST / savings)
+          Math.round(
+            SOLAR_COST / savings
+          )
         ),
       });
     }
 
     if (!insulation) {
-      const savings = yearlyCost * 0.25;
+      const savings =
+        yearlyCost * 0.25;
 
       roi.push({
-        label: "Aislamiento térmico",
-        cost: INSULATION_COST,
-        yearlySavings: Math.round(savings),
+        label:
+          "Aislamiento térmico",
+        cost:
+          INSULATION_COST,
+        yearlySavings:
+          Math.round(savings),
 
         payback: Math.max(
           1,
-          Math.round(INSULATION_COST / savings)
+          Math.round(
+            INSULATION_COST /
+              savings
+          )
         ),
       });
     }
 
     if (windows === "simple") {
-      const savings = yearlyCost * 0.15;
+      const savings =
+        yearlyCost * 0.15;
 
       roi.push({
-        label: "Doble vidrio",
-        cost: WINDOWS_COST,
-        yearlySavings: Math.round(savings),
+        label:
+          "Doble vidrio",
+        cost:
+          WINDOWS_COST,
+        yearlySavings:
+          Math.round(savings),
 
         payback: Math.max(
           1,
-          Math.round(WINDOWS_COST / savings)
+          Math.round(
+            WINDOWS_COST /
+              savings
+          )
         ),
       });
     }
 
-    // -----------------------------
     // Energy score
-    // -----------------------------
     let score = 40;
 
-    if (insulation) score += 20;
+    if (insulation) {
+      score += 20;
+    }
 
-    if (solar) score += 25;
+    if (solar) {
+      score += 25;
+    }
 
-    if (windows === "double") score += 15;
+    if (windows === "double") {
+      score += 15;
+    }
 
-    score = Math.min(score, 100);
+    score = Math.min(
+      score,
+      100
+    );
 
     let efficiency = "Baja";
 
     if (score >= 70) {
       efficiency = "Alta";
-    } else if (score >= 50) {
+    } else if (
+      score >= 50
+    ) {
       efficiency = "Media";
     }
 
-    // -----------------------------
-    // Report helpers
-    // -----------------------------
-    const summary = generateSummary({
-      insulation,
-      solar,
-      windows,
-    });
+    const summary =
+      generateSummary({
+        insulation,
+        solar,
+        windows,
+      });
 
     const priority =
-      getPriorityLabel(score);
+      getPriorityLabel(
+        score
+      );
 
     const status =
-      getEnergyStatus(score);
+      getEnergyStatus(
+        score
+      );
 
     const potentialSavings =
       roi.reduce(
         (total, item) =>
-          total + item.yearlySavings,
+          total +
+          item.yearlySavings,
         0
       );
 
-    setResult({
-      consumption: Math.round(consumption),
+    const energyProfile =
+      getEnergyProfile(
+        score
+      );
 
-      cost: Math.round(monthlyCost),
+    const mainRecommendation =
+      getMainRecommendation(
+        insulation,
+        solar,
+        windows
+      );
+
+    setResult({
+      consumption:
+        Math.round(
+          consumption
+        ),
+
+      cost:
+        Math.round(
+          monthlyCost
+        ),
 
       recommendations,
       roi,
 
       score,
       efficiency,
-      cityLabel: selectedCity.label,
+
+      cityLabel:
+        selectedCity.label,
 
       summary,
       priority,
       status,
       potentialSavings,
+
+      energyProfile,
+
+      mainRecommendation,
+
+      housingLabel:
+        housingLabels[
+          housingType as keyof typeof housingLabels
+        ],
     });
   }
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-12 print-spacing">
+
       {/* HERO */}
       <section>
         <h1 className="text-3xl font-bold">
@@ -229,15 +322,14 @@ export default function EcoBuildInsightPage() {
         </h1>
 
         <p className="mt-4 text-neutral-600">
-          Estimá el consumo energético de tu
-          vivienda y descubrí cómo reducir
-          costos con mejoras sustentables.
+          Estimá el consumo energético de tu vivienda y descubrí cómo reducir costos con mejoras sustentables.
         </p>
       </section>
 
       {/* FORM */}
       <section className="mt-10 rounded-2xl border p-6">
         <div className="space-y-6">
+
           <div>
             <label className="mb-2 block text-sm font-medium">
               Tamaño de la vivienda (m²)
@@ -248,7 +340,11 @@ export default function EcoBuildInsightPage() {
               placeholder="Ej: 80"
               value={size}
               onChange={(e) =>
-                setSize(Number(e.target.value))
+                setSize(
+                  Number(
+                    e.target.value
+                  )
+                )
               }
               className="w-full rounded-lg border p-2"
             />
@@ -262,7 +358,10 @@ export default function EcoBuildInsightPage() {
             <select
               value={city}
               onChange={(e) =>
-                setCity(e.target.value as CityKey)
+                setCity(
+                  e.target
+                    .value as CityKey
+                )
               }
               className="w-full rounded-lg border p-2"
             >
@@ -280,17 +379,49 @@ export default function EcoBuildInsightPage() {
             </select>
           </div>
 
+          <div>
+            <label className="mb-2 block text-sm font-medium">
+              Tipo de vivienda
+            </label>
+
+            <select
+              value={housingType}
+              onChange={(e) =>
+                setHousingType(
+                  e.target.value
+                )
+              }
+              className="w-full rounded-lg border p-2"
+            >
+              <option value="tiny">
+                Tiny house
+              </option>
+
+              <option value="small">
+                Casa pequeña
+              </option>
+
+              <option value="familiar">
+                Casa familiar
+              </option>
+            </select>
+          </div>
+
           <div className="space-y-3">
             <label className="flex items-center gap-2">
               <input
                 type="checkbox"
                 checked={insulation}
                 onChange={(e) =>
-                  setInsulation(e.target.checked)
+                  setInsulation(
+                    e.target.checked
+                  )
                 }
               />
 
-              <span>Aislamiento térmico</span>
+              <span>
+                Aislamiento térmico
+              </span>
             </label>
 
             <label className="flex items-center gap-2">
@@ -298,11 +429,15 @@ export default function EcoBuildInsightPage() {
                 type="checkbox"
                 checked={solar}
                 onChange={(e) =>
-                  setSolar(e.target.checked)
+                  setSolar(
+                    e.target.checked
+                  )
                 }
               />
 
-              <span>Paneles solares</span>
+              <span>
+                Paneles solares
+              </span>
             </label>
           </div>
 
@@ -314,7 +449,9 @@ export default function EcoBuildInsightPage() {
             <select
               value={windows}
               onChange={(e) =>
-                setWindows(e.target.value)
+                setWindows(
+                  e.target.value
+                )
               }
               className="w-full rounded-lg border p-2"
             >
@@ -340,6 +477,8 @@ export default function EcoBuildInsightPage() {
       {/* RESULTS */}
       {result && (
         <section className="mt-10 space-y-6 rounded-2xl border p-6">
+
+          {/* Results */}
           <div>
             <h2 className="text-xl font-semibold">
               Resultados
@@ -366,6 +505,7 @@ export default function EcoBuildInsightPage() {
 
           {/* Energy Summary */}
           <div className="grid gap-4 md:grid-cols-3">
+
             <div className="rounded-xl border p-4">
               <p className="text-sm text-neutral-500">
                 Ciudad
@@ -378,21 +518,21 @@ export default function EcoBuildInsightPage() {
 
             <div className="rounded-xl border p-4">
               <p className="text-sm text-neutral-500">
-                Puntaje energético
+                Tipo de vivienda
               </p>
 
               <p className="mt-2 text-lg font-semibold">
-                {result.score}/100
+                {result.housingLabel}
               </p>
             </div>
 
             <div className="rounded-xl border p-4">
               <p className="text-sm text-neutral-500">
-                Eficiencia
+                Puntaje energético
               </p>
 
               <p className="mt-2 text-lg font-semibold">
-                {result.efficiency}
+                {result.score}/100
               </p>
             </div>
           </div>
@@ -408,6 +548,7 @@ export default function EcoBuildInsightPage() {
             </p>
 
             <div className="mt-6 grid gap-4 md:grid-cols-3">
+
               <div className="rounded-xl border bg-white p-4">
                 <p className="text-sm text-neutral-500">
                   Estado energético
@@ -436,6 +577,36 @@ export default function EcoBuildInsightPage() {
                 <p className="mt-2 text-lg font-semibold">
                   $
                   {result.potentialSavings}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Sprint 21 — Insights */}
+          <div className="rounded-2xl border bg-neutral-50 p-6">
+            <h3 className="text-lg font-semibold">
+              Insights personalizados
+            </h3>
+
+            <div className="mt-4 space-y-4">
+
+              <div className="rounded-xl border bg-white p-4">
+                <p className="text-sm text-neutral-500">
+                  Perfil energético
+                </p>
+
+                <p className="mt-2 text-lg font-semibold">
+                  {result.energyProfile}
+                </p>
+              </div>
+
+              <div className="rounded-xl border bg-white p-4">
+                <p className="text-sm text-neutral-500">
+                  Mejora principal sugerida
+                </p>
+
+                <p className="mt-2 leading-7 text-neutral-700">
+                  {result.mainRecommendation}
                 </p>
               </div>
             </div>
@@ -473,7 +644,10 @@ export default function EcoBuildInsightPage() {
 
               <div className="mt-3 space-y-3">
                 {result.roi.map(
-                  (item, index) => (
+                  (
+                    item,
+                    index
+                  ) => (
                     <div
                       key={index}
                       className="rounded-lg border p-4"
@@ -484,17 +658,17 @@ export default function EcoBuildInsightPage() {
 
                       <div className="mt-2 space-y-1 text-sm text-neutral-700">
                         <p>
-                          Costo estimado: $
-                          {item.cost}
+                          Costo estimado:
+                          ${item.cost}
                         </p>
 
                         <p>
-                          Ahorro anual: $
-                          {item.yearlySavings}
+                          Ahorro anual:
+                          ${item.yearlySavings}
                         </p>
 
                         <p>
-                          Retorno estimado:{" "}
+                          Retorno estimado:
                           {item.payback} años
                         </p>
                       </div>
@@ -516,8 +690,11 @@ export default function EcoBuildInsightPage() {
             </p>
 
             <button
-              onClick={() => window.print()}
-              className="mt-4 rounded-xl bg-black px-5 py-3 text-white transition hover:opacity-90">
+              onClick={() =>
+                window.print()
+              }
+              className="mt-4 rounded-xl bg-black px-5 py-3 text-white transition hover:opacity-90"
+            >
               Descargar PDF
             </button>
           </div>
@@ -529,10 +706,7 @@ export default function EcoBuildInsightPage() {
             </h3>
 
             <p className="mt-2 text-neutral-600">
-              TinyWiki puede ayudarte a
-              evaluar mejoras reales para tu
-              vivienda, incluyendo ahorro
-              estimado y retorno de inversión.
+              TinyWiki puede ayudarte a evaluar mejoras reales para tu vivienda, incluyendo ahorro estimado y retorno de inversión.
             </p>
 
             <Link
