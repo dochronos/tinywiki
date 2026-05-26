@@ -19,6 +19,12 @@ import {
   getMainRecommendation,
 } from "@/lib/energy/insights";
 
+import {
+  getBenchmark,
+  getBenchmarkStatus,
+  getBenchmarkMessage,
+} from "@/lib/energy/benchmark";
+
 type ROI = {
   label: string;
   cost: number;
@@ -44,6 +50,10 @@ type Result = {
   energyProfile: string;
   mainRecommendation: string;
   housingLabel: string;
+
+  benchmark: number;
+  benchmarkStatus: string;
+  benchmarkMessage: string;
 };
 
 export default function EcoBuildInsightPage() {
@@ -276,6 +286,23 @@ export default function EcoBuildInsightPage() {
         windows
       );
 
+      const benchmark =
+       getBenchmark(
+        housingType
+      );
+
+      const benchmarkStatus =
+        getBenchmarkStatus(
+          consumption,
+          benchmark
+        );
+
+      const benchmarkMessage =
+        getBenchmarkMessage(
+          consumption,
+          benchmark
+        );
+
     setResult({
       consumption:
         Math.round(
@@ -306,10 +333,14 @@ export default function EcoBuildInsightPage() {
       mainRecommendation,
 
       housingLabel:
-        housingLabels[
-          housingType as keyof typeof housingLabels
-        ],
-    });
+       housingLabels[
+        housingType as keyof typeof housingLabels
+      ],
+
+      benchmark,
+      benchmarkStatus,
+      benchmarkMessage,
+      });
   }
 
   return (
@@ -582,7 +613,7 @@ export default function EcoBuildInsightPage() {
             </div>
           </div>
 
-          {/* Sprint 21 — Insights */}
+          {/* Insights */}
           <div className="rounded-2xl border bg-neutral-50 p-6">
             <h3 className="text-lg font-semibold">
               Insights personalizados
@@ -611,6 +642,56 @@ export default function EcoBuildInsightPage() {
               </div>
             </div>
           </div>
+
+          {/* Benchmark */}
+            <div className="rounded-2xl border bg-neutral-50 p-6">
+              <h3 className="text-lg font-semibold">
+                Comparación energética
+              </h3>
+
+            <p className="mt-2 text-neutral-600">
+               Comparación estimada frente a viviendas similares.
+            </p>
+
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+
+             <div className="rounded-xl border bg-white p-4">
+              <p className="text-sm text-neutral-500">
+                Tu consumo anual
+              </p>
+
+              <p className="mt-2 text-lg font-semibold">
+                {result.consumption} kWh
+              </p>
+            </div>
+
+            <div className="rounded-xl border bg-white p-4">
+              <p className="text-sm text-neutral-500">
+                Promedio estimado
+              </p>
+
+              <p className="mt-2 text-lg font-semibold">
+                {result.benchmark} kWh
+              </p>
+            </div>
+
+            <div className="rounded-xl border bg-white p-4">
+              <p className="text-sm text-neutral-500">
+                Resultado
+              </p>
+
+              <p className="mt-2 text-lg font-semibold">
+                {result.benchmarkStatus}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 rounded-xl border bg-white p-4">
+              <p className="leading-7 text-neutral-700">
+                {result.benchmarkMessage}
+              </p>
+          </div>
+        </div>
 
           {/* Recommendations */}
           <div>
