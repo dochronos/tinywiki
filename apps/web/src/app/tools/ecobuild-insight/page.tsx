@@ -21,6 +21,12 @@ import {
 
 import { getActionPlan } from "@/lib/energy/actionPlan";
 
+import {
+  getReadinessLevel,
+  getReadinessMessage,
+  getConfidenceLevel,
+} from "@/lib/energy/readiness";
+
 type ROI = {
   label: string;
   cost: number;
@@ -54,6 +60,10 @@ type Result = {
   actionTitle: string;
   actionImpact: string;
   actionNextStep: string;
+
+  readinessLevel: string;
+  readinessMessage: string;
+  confidenceLevel: string;
 };
 
 export default function EcoBuildInsightPage() {
@@ -231,6 +241,12 @@ export default function EcoBuildInsightPage() {
 
     const actionPlan = getActionPlan(insulation, solar, windows);
 
+    const readinessLevel = getReadinessLevel(score);
+
+    const readinessMessage = getReadinessMessage(score);
+
+    const confidenceLevel = getConfidenceLevel(score);
+
     setResult({
       consumption: Math.round(consumption),
 
@@ -264,6 +280,10 @@ export default function EcoBuildInsightPage() {
       actionImpact: actionPlan.impact,
 
       actionNextStep: actionPlan.nextStep,
+
+      readinessLevel,
+      readinessMessage,
+      confidenceLevel,
     });
   }
 
@@ -635,6 +655,49 @@ export default function EcoBuildInsightPage() {
             >
               Descargar PDF
             </button>
+          </div>
+
+          {/* Energy Readiness */}
+          <div className="rounded-2xl border bg-neutral-50 p-6">
+            <h3 className="text-lg font-semibold">
+              Nivel de preparación energética
+            </h3>
+
+            <p className="mt-2 text-neutral-600">
+              Resumen general del desempeño energético estimado.
+            </p>
+
+            <div className="mt-5 grid gap-4 md:grid-cols-3">
+              <div className="rounded-xl border bg-white p-4">
+                <p className="text-sm text-neutral-500">Preparación</p>
+
+                <p className="mt-2 text-lg font-semibold">
+                  {result.readinessLevel}
+                </p>
+              </div>
+
+              <div className="rounded-xl border bg-white p-4">
+                <p className="text-sm text-neutral-500">
+                  Confianza orientativa
+                </p>
+
+                <p className="mt-2 text-lg font-semibold">
+                  {result.confidenceLevel}
+                </p>
+              </div>
+
+              <div className="rounded-xl border bg-white p-4">
+                <p className="text-sm text-neutral-500">Resultado general</p>
+
+                <p className="mt-2 text-lg font-semibold">{result.status}</p>
+              </div>
+            </div>
+
+            <div className="mt-4 rounded-xl border bg-white p-4">
+              <p className="leading-7 text-neutral-700">
+                {result.readinessMessage}
+              </p>
+            </div>
           </div>
 
           {/* CTA */}
