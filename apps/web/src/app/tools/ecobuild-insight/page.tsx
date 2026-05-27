@@ -19,6 +19,8 @@ import {
   getBenchmarkMessage,
 } from "@/lib/energy/benchmark";
 
+import { getActionPlan } from "@/lib/energy/actionPlan";
+
 type ROI = {
   label: string;
   cost: number;
@@ -48,6 +50,10 @@ type Result = {
   benchmark: number;
   benchmarkStatus: string;
   benchmarkMessage: string;
+
+  actionTitle: string;
+  actionImpact: string;
+  actionNextStep: string;
 };
 
 export default function EcoBuildInsightPage() {
@@ -223,6 +229,8 @@ export default function EcoBuildInsightPage() {
 
     const benchmarkMessage = getBenchmarkMessage(consumption, benchmark);
 
+    const actionPlan = getActionPlan(insulation, solar, windows);
+
     setResult({
       consumption: Math.round(consumption),
 
@@ -250,6 +258,12 @@ export default function EcoBuildInsightPage() {
       benchmark,
       benchmarkStatus,
       benchmarkMessage,
+
+      actionTitle: actionPlan.title,
+
+      actionImpact: actionPlan.impact,
+
+      actionNextStep: actionPlan.nextStep,
     });
   }
 
@@ -534,6 +548,35 @@ export default function EcoBuildInsightPage() {
                 técnica profesional.
               </li>
             </ul>
+          </div>
+
+          {/* Action Plan */}
+          <div className="rounded-2xl border bg-neutral-50 p-6">
+            <h3 className="text-lg font-semibold">Plan sugerido de mejora</h3>
+
+            <p className="mt-2 text-neutral-600">
+              Próximos pasos recomendados según tu configuración actual.
+            </p>
+
+            <div className="mt-5 grid gap-4 md:grid-cols-3">
+              <div className="rounded-xl border bg-white p-4">
+                <p className="text-sm text-neutral-500">Mejora prioritaria</p>
+
+                <p className="mt-2 font-semibold">{result.actionTitle}</p>
+              </div>
+
+              <div className="rounded-xl border bg-white p-4">
+                <p className="text-sm text-neutral-500">Impacto esperado</p>
+
+                <p className="mt-2 font-semibold">{result.actionImpact}</p>
+              </div>
+
+              <div className="rounded-xl border bg-white p-4">
+                <p className="text-sm text-neutral-500">Próximo paso</p>
+
+                <p className="mt-2 font-semibold">{result.actionNextStep}</p>
+              </div>
+            </div>
           </div>
 
           {/* Recommendations */}
