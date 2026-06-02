@@ -26,7 +26,7 @@ export default function WikiPage() {
     <main className="mx-auto max-w-4xl px-6 py-10">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">Wiki</h1>
-        <p className="text-sm text-neutral-600">
+        <p className="text-sm text-text-secondary">
           Artículos y guías prácticas sobre sustentabilidad, energía solar y
           soluciones off-grid, con foco en Argentina.
         </p>
@@ -50,7 +50,7 @@ export default function WikiPage() {
             className="block rounded-2xl border p-5 shadow-sm hover:bg-neutral-50"
           >
             <h2 className="text-lg font-medium">{t.title}</h2>
-            <p className="mt-2 text-sm text-neutral-600">{t.description}</p>
+            <p className="mt-2 text-sm text-text-secondary">{t.description}</p>
           </Link>
         ))}
       </section>

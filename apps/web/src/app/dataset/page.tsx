@@ -192,7 +192,7 @@ export default function DatasetPage() {
               className="block rounded-2xl border border-neutral-200 p-4 transition hover:bg-neutral-50"
             >
               <p className="font-medium text-neutral-900">GitHub repository</p>
-              <p className="mt-1 text-sm leading-6 text-neutral-600">
+              <p className="mt-1 text-sm leading-6 text-text-secondary">
                 Public source code, version history and sprint-based project
                 evolution.
               </p>
@@ -203,7 +203,7 @@ export default function DatasetPage() {
               className="block rounded-2xl border border-neutral-200 p-4 transition hover:bg-neutral-50"
             >
               <p className="font-medium text-neutral-900">Providers page</p>
-              <p className="mt-1 text-sm leading-6 text-neutral-600">
+              <p className="mt-1 text-sm leading-6 text-text-secondary">
                 Main table view using the provider dataset.
               </p>
             </Link>
@@ -213,7 +213,7 @@ export default function DatasetPage() {
               className="block rounded-2xl border border-neutral-200 p-4 transition hover:bg-neutral-50"
             >
               <p className="font-medium text-neutral-900">Providers map</p>
-              <p className="mt-1 text-sm leading-6 text-neutral-600">
+              <p className="mt-1 text-sm leading-6 text-text-secondary">
                 Geographical exploration through the interactive map.
               </p>
             </Link>
@@ -223,7 +223,7 @@ export default function DatasetPage() {
               className="block rounded-2xl border border-neutral-200 p-4 transition hover:bg-neutral-50"
             >
               <p className="font-medium text-neutral-900">Data section</p>
-              <p className="mt-1 text-sm leading-6 text-neutral-600">
+              <p className="mt-1 text-sm leading-6 text-text-secondary">
                 Broader project data layer and analytics context.
               </p>
             </Link>
@@ -338,7 +338,7 @@ export default function DatasetPage() {
           </ul>
 
           <div className="mt-6 rounded-2xl border border-dashed border-neutral-300 p-4">
-            <p className="text-sm leading-7 text-neutral-600">
+            <p className="text-sm leading-7 text-text-secondary">
               Pipeline file:
               <code className="ml-2 rounded bg-neutral-100 px-2 py-1">
                 data-pipeline/clean_providers.py
@@ -361,7 +361,7 @@ export default function DatasetPage() {
                 className="block rounded-2xl border border-neutral-200 p-5 transition hover:bg-neutral-50"
               >
                 <p className="font-medium text-neutral-900">{item.label}</p>
-                <p className="mt-2 text-sm leading-6 text-neutral-600">
+                <p className="mt-2 text-sm leading-6 text-text-secondary">
                   {item.description}
                 </p>
               </a>
@@ -381,7 +381,7 @@ export default function DatasetPage() {
                 className="block rounded-2xl border border-neutral-200 p-5 transition hover:bg-neutral-50"
               >
                 <p className="font-medium text-neutral-900">{link.label}</p>
-                <p className="mt-2 text-sm leading-6 text-neutral-600">
+                <p className="mt-2 text-sm leading-6 text-text-secondary">
                   {link.description}
                 </p>
               </Link>
@@ -410,7 +410,7 @@ export default function DatasetPage() {
           />
         </div>
 
-        <p className="mt-4 text-sm leading-7 text-neutral-600">
+        <p className="mt-4 text-sm leading-7 text-text-secondary">
           Suggested screenshot: Power BI dashboard or providers map, saved in
           <code className="mx-1 rounded bg-neutral-100 px-2 py-1">
             apps/web/public/images/tinywiki-providers-dashboard.png

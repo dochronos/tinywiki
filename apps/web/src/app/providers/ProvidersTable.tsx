@@ -58,7 +58,7 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
       <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div className="flex flex-wrap gap-3">
           <div className="flex flex-col gap-1">
-            <label className="text-xs text-neutral-600">Categoría</label>
+            <label className="text-xs text-text-secondary">Categoría</label>
             <select
               className="rounded-xl border px-3 py-2 text-sm"
               value={category}
@@ -74,7 +74,7 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs text-neutral-600">Provincia</label>
+            <label className="text-xs text-text-secondary">Provincia</label>
             <select
               className="rounded-xl border px-3 py-2 text-sm"
               value={province}
@@ -90,7 +90,7 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-xs text-neutral-600">Búsqueda</label>
+            <label className="text-xs text-text-secondary">Búsqueda</label>
             <input
               className="w-full rounded-xl border px-3 py-2 text-sm md:w-64"
               placeholder="Nombre, ciudad, subcategoría..."
@@ -100,7 +100,7 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
           </div>
         </div>
 
-        <div className="text-xs text-neutral-600">
+        <div className="text-xs text-text-secondary">
           Mostrando <span className="font-medium">{filtered.length}</span> de{" "}
           <span className="font-medium">{providers.length}</span>
         </div>
@@ -109,7 +109,7 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
       <div className="mt-4 overflow-x-auto">
         <table className="w-full min-w-[900px] border-separate border-spacing-0">
           <thead>
-            <tr className="text-left text-xs text-neutral-600">
+            <tr className="text-left text-xs text-text-secondary">
               <th className="border-b px-3 py-2">Proveedor</th>
               <th className="border-b px-3 py-2">Categoría</th>
               <th className="border-b px-3 py-2">Ubicación</th>
@@ -124,16 +124,16 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
                 <td className="border-b px-3 py-3 align-top">
                   <div className="font-medium">{p.provider_name}</div>
                   {p.subcategory ? (
-                    <div className="mt-1 text-xs text-neutral-600">{p.subcategory}</div>
+                    <div className="mt-1 text-xs text-text-secondary">{p.subcategory}</div>
                   ) : null}
-                  {p.notes ? <div className="mt-2 text-xs text-neutral-600">{p.notes}</div> : null}
+                  {p.notes ? <div className="mt-2 text-xs text-text-secondary">{p.notes}</div> : null}
                 </td>
 
                 <td className="border-b px-3 py-3 align-top">{p.category}</td>
 
                 <td className="border-b px-3 py-3 align-top">
                   <div>{p.province}</div>
-                  {p.city ? <div className="text-xs text-neutral-600">{p.city}</div> : null}
+                  {p.city ? <div className="text-xs text-text-secondary">{p.city}</div> : null}
                 </td>
 
                 <td className="border-b px-3 py-3 align-top">
@@ -164,7 +164,7 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
 
             {filtered.length === 0 ? (
               <tr>
-                <td className="px-3 py-6 text-sm text-neutral-600" colSpan={6}>
+                <td className="px-3 py-6 text-sm text-text-secondary" colSpan={6}>
                   No hay resultados con esos filtros.
                 </td>
               </tr>

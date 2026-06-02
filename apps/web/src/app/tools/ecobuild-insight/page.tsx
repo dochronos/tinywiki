@@ -288,19 +288,26 @@ export default function EcoBuildInsightPage() {
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-12 print-spacing">
+    <main className="mx-auto max-w-4xl px-6 py-14 print-spacing">
       {/* HERO */}
-      <section>
-        <h1 className="text-3xl font-bold">EcoBuild Insight</h1>
+      <section className="rounded-3xl border border-border-soft bg-surface p-8">
+        <p className="tw-mono text-xs uppercase tracking-[0.2em] text-text-secondary">
+          Sustainability · Energy · Insights
+        </p>
 
-        <p className="mt-4 text-neutral-600">
-          Estimá el consumo energético de tu vivienda y descubrí cómo reducir
-          costos con mejoras sustentables.
+        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-text-primary">
+          EcoBuild Insight
+        </h1>
+
+        <p className="mt-4 max-w-2xl leading-8 text-text-secondary">
+          Estimá el consumo energético de tu vivienda y descubrí oportunidades
+          reales para reducir costos mediante eficiencia, aislamiento y
+          soluciones sustentables.
         </p>
       </section>
 
       {/* FORM */}
-      <section className="mt-10 rounded-2xl border p-6">
+      <section className="mt-10 rounded-3xl border border-border-soft bg-surface p-8">
         <div className="space-y-6">
           <div>
             <label className="mb-2 block text-sm font-medium">
@@ -390,7 +397,7 @@ export default function EcoBuildInsightPage() {
 
           <button
             onClick={calculate}
-            className="w-full rounded-xl bg-black py-3 text-white transition hover:opacity-90"
+            className="w-full rounded-2xl bg-primary py-3 text-white transition hover:opacity-90"
           >
             Calcular
           </button>
@@ -399,7 +406,7 @@ export default function EcoBuildInsightPage() {
 
       {/* RESULTS */}
       {result && (
-        <section className="mt-10 space-y-6 rounded-2xl border p-6">
+        <section className="mt-10 space-y-6 rounded-3xl border border-border-soft bg-surface p-8">
           {/* Results */}
           <div>
             <h2 className="text-xl font-semibold">Resultados</h2>
@@ -419,13 +426,13 @@ export default function EcoBuildInsightPage() {
 
           {/* Energy Summary */}
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-xl border p-4">
+            <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
               <p className="text-sm text-neutral-500">Ciudad</p>
 
               <p className="mt-2 text-lg font-semibold">{result.cityLabel}</p>
             </div>
 
-            <div className="rounded-xl border p-4">
+            <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
               <p className="text-sm text-neutral-500">Tipo de vivienda</p>
 
               <p className="mt-2 text-lg font-semibold">
@@ -433,7 +440,7 @@ export default function EcoBuildInsightPage() {
               </p>
             </div>
 
-            <div className="rounded-xl border p-4">
+            <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
               <p className="text-sm text-neutral-500">Puntaje energético</p>
 
               <p className="mt-2 text-lg font-semibold">{result.score}/100</p>
@@ -441,25 +448,25 @@ export default function EcoBuildInsightPage() {
           </div>
 
           {/* Energy Report */}
-          <div className="rounded-2xl border bg-neutral-50 p-6">
+          <div className="rounded-3xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
             <h3 className="text-lg font-semibold">Resumen del análisis</h3>
 
             <p className="mt-3 leading-7 text-neutral-700">{result.summary}</p>
 
             <div className="mt-6 grid gap-4 md:grid-cols-3">
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">Estado energético</p>
 
                 <p className="mt-2 text-lg font-semibold">{result.status}</p>
               </div>
 
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">Prioridad de mejora</p>
 
                 <p className="mt-2 text-lg font-semibold">{result.priority}</p>
               </div>
 
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">
                   Ahorro potencial anual
                 </p>
@@ -472,11 +479,11 @@ export default function EcoBuildInsightPage() {
           </div>
 
           {/* Insights */}
-          <div className="rounded-2xl border bg-neutral-50 p-6">
+          <div className="rounded-3xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
             <h3 className="text-lg font-semibold">Insights personalizados</h3>
 
             <div className="mt-4 space-y-4">
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">Perfil energético</p>
 
                 <p className="mt-2 text-lg font-semibold">
@@ -484,7 +491,7 @@ export default function EcoBuildInsightPage() {
                 </p>
               </div>
 
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">
                   Mejora principal sugerida
                 </p>
@@ -497,15 +504,15 @@ export default function EcoBuildInsightPage() {
           </div>
 
           {/* Benchmark */}
-          <div className="rounded-2xl border bg-neutral-50 p-6">
+          <div className="rounded-3xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
             <h3 className="text-lg font-semibold">Comparación energética</h3>
 
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-text-secondary">
               Comparación estimada frente a viviendas similares.
             </p>
 
             <div className="mt-6 grid gap-4 md:grid-cols-3">
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">Tu consumo anual</p>
 
                 <p className="mt-2 text-lg font-semibold">
@@ -513,7 +520,7 @@ export default function EcoBuildInsightPage() {
                 </p>
               </div>
 
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">Promedio estimado</p>
 
                 <p className="mt-2 text-lg font-semibold">
@@ -521,7 +528,7 @@ export default function EcoBuildInsightPage() {
                 </p>
               </div>
 
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">Resultado</p>
 
                 <p className="mt-2 text-lg font-semibold">
@@ -530,7 +537,7 @@ export default function EcoBuildInsightPage() {
               </div>
             </div>
 
-            <div className="mt-4 rounded-xl border bg-white p-4">
+            <div className="mt-4 rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
               <p className="leading-7 text-neutral-700">
                 {result.benchmarkMessage}
               </p>
@@ -538,12 +545,12 @@ export default function EcoBuildInsightPage() {
           </div>
 
           {/* Methodology */}
-          <div className="rounded-2xl border bg-neutral-50 p-6">
+          <div className="rounded-3xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
             <h3 className="text-lg font-semibold">
               ¿Cómo se calcula esta estimación?
             </h3>
 
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-text-secondary">
               EcoBuild utiliza estimaciones orientativas basadas en superficie,
               ubicación y mejoras energéticas seleccionadas.
             </p>
@@ -571,27 +578,27 @@ export default function EcoBuildInsightPage() {
           </div>
 
           {/* Action Plan */}
-          <div className="rounded-2xl border bg-neutral-50 p-6">
+          <div className="rounded-3xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
             <h3 className="text-lg font-semibold">Plan sugerido de mejora</h3>
 
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-text-secondary">
               Próximos pasos recomendados según tu configuración actual.
             </p>
 
             <div className="mt-5 grid gap-4 md:grid-cols-3">
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">Mejora prioritaria</p>
 
                 <p className="mt-2 font-semibold">{result.actionTitle}</p>
               </div>
 
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">Impacto esperado</p>
 
                 <p className="mt-2 font-semibold">{result.actionImpact}</p>
               </div>
 
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">Próximo paso</p>
 
                 <p className="mt-2 font-semibold">{result.actionNextStep}</p>
@@ -605,7 +612,7 @@ export default function EcoBuildInsightPage() {
 
             <ul className="mt-3 space-y-2">
               {result.recommendations.map((recommendation, index) => (
-                <li key={index} className="rounded-lg border bg-neutral-50 p-3">
+                <li key={index} className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-4">
                   {recommendation}
                 </li>
               ))}
@@ -619,7 +626,7 @@ export default function EcoBuildInsightPage() {
 
               <div className="mt-3 space-y-3">
                 {result.roi.map((item, index) => (
-                  <div key={index} className="rounded-lg border p-4">
+                  <div key={index} className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                     <p className="font-medium">{item.label}</p>
 
                     <div className="mt-2 space-y-1 text-sm text-neutral-700">
@@ -639,36 +646,36 @@ export default function EcoBuildInsightPage() {
           )}
 
           {/* Download Report */}
-          <div className="rounded-2xl border bg-neutral-50 p-6">
+          <div className="rounded-2xl border rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
             <h3 className="text-lg font-semibold">
               Descargar reporte energético
             </h3>
 
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-text-secondary">
               Exportá este análisis para guardarlo, compartirlo o utilizarlo
               como referencia para futuras mejoras.
             </p>
 
             <button
               onClick={() => window.print()}
-              className="mt-4 rounded-xl bg-black px-5 py-3 text-white transition hover:opacity-90"
+              className="mt-4 rounded-2xl bg-primary px-5 py-3 text-white transition hover:opacity-90"
             >
               Descargar PDF
             </button>
           </div>
 
           {/* Energy Readiness */}
-          <div className="rounded-2xl border bg-neutral-50 p-6">
+          <div className="rounded-3xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
             <h3 className="text-lg font-semibold">
               Nivel de preparación energética
             </h3>
 
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-text-secondary">
               Resumen general del desempeño energético estimado.
             </p>
 
             <div className="mt-5 grid gap-4 md:grid-cols-3">
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">Preparación</p>
 
                 <p className="mt-2 text-lg font-semibold">
@@ -676,7 +683,7 @@ export default function EcoBuildInsightPage() {
                 </p>
               </div>
 
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">
                   Confianza orientativa
                 </p>
@@ -686,14 +693,14 @@ export default function EcoBuildInsightPage() {
                 </p>
               </div>
 
-              <div className="rounded-xl border bg-white p-4">
+              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
                 <p className="text-sm text-neutral-500">Resultado general</p>
 
                 <p className="mt-2 text-lg font-semibold">{result.status}</p>
               </div>
             </div>
 
-            <div className="mt-4 rounded-xl border bg-white p-4">
+            <div className="mt-4 rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
               <p className="leading-7 text-neutral-700">
                 {result.readinessMessage}
               </p>
@@ -706,14 +713,14 @@ export default function EcoBuildInsightPage() {
               ¿Querés un análisis personalizado?
             </h3>
 
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-text-secondary">
               TinyWiki puede ayudarte a evaluar mejoras reales para tu vivienda,
               incluyendo ahorro estimado y retorno de inversión.
             </p>
 
             <Link
               href="/services/energy-analysis"
-              className="mt-4 inline-block rounded-xl bg-black px-5 py-3 text-white transition hover:opacity-90"
+              className="mt-4 inline-block rounded-2xl bg-primary px-5 py-3 text-white transition hover:opacity-90"
             >
               Solicitar análisis
             </Link>

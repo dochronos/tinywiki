@@ -14,7 +14,7 @@ export default function ToolsPage() {
           Herramientas
         </h1>
 
-        <p className="text-sm text-neutral-600">
+        <p className="text-sm text-text-secondary">
           Checklists y calculadoras orientativas para tomar decisiones antes
           de invertir tiempo o dinero.
         </p>
@@ -52,7 +52,7 @@ export default function ToolsPage() {
             Checklist: ¿Estoy listo para energía solar?
           </div>
 
-          <div className="mt-1 text-sm text-neutral-600">
+          <div className="mt-1 text-sm text-text-secondary">
             Evalúa preparación básica (consumo, espacio, sol y objetivos)
             antes de avanzar.
           </div>
@@ -66,7 +66,7 @@ export default function ToolsPage() {
             Checklist: ¿Estoy listo para un termotanque solar?
           </div>
 
-          <div className="mt-1 text-sm text-neutral-600">
+          <div className="mt-1 text-sm text-text-secondary">
             Evalúa consumo de agua caliente, espacio, sol y estado de la
             instalación.
           </div>
@@ -80,7 +80,7 @@ export default function ToolsPage() {
             Calculadora: estimación solar (Argentina)
           </div>
 
-          <div className="mt-1 text-sm text-neutral-600">
+          <div className="mt-1 text-sm text-text-secondary">
             Estima un rango de kWp y paneles según consumo mensual,
             provincia y objetivo.
           </div>
@@ -94,7 +94,7 @@ export default function ToolsPage() {
             EcoBuild Insight
           </div>
 
-          <div className="mt-1 text-sm text-neutral-600">
+          <div className="mt-1 text-sm text-text-secondary">
             Estimá consumo energético, mejoras sustentables y retorno de
             inversión para viviendas en Argentina.
           </div>

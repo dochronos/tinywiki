@@ -67,7 +67,7 @@ export default function SolarReadinessChecklist() {
     <div className="rounded-2xl border p-5 shadow-sm">
       <div className="flex items-baseline justify-between gap-4">
         <div>
-          <div className="text-sm text-neutral-600">Preguntas</div>
+          <div className="text-sm text-text-secondary">Preguntas</div>
           <div className="text-xs text-neutral-500">{QUESTIONS.length} items · Sí/No</div>
         </div>
         <button
@@ -92,7 +92,7 @@ export default function SolarReadinessChecklist() {
                   <div className="text-sm font-medium">
                     {idx + 1}. {q.title}
                   </div>
-                  {q.detail ? <div className="mt-1 text-xs text-neutral-600">{q.detail}</div> : null}
+                  {q.detail ? <div className="mt-1 text-xs text-text-secondary">{q.detail}</div> : null}
                 </div>
 
                 <div className="flex gap-2">
@@ -122,7 +122,7 @@ export default function SolarReadinessChecklist() {
       </div>
 
       <div className="mt-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div className="text-sm text-neutral-600">
+        <div className="text-sm text-text-secondary">
           Respuestas: <span className="font-medium">{Object.keys(answers).length}</span>/{QUESTIONS.length} · Puntaje:{" "}
           <span className="font-medium">{score}</span>
           {missingCount > 0 ? <span className="text-neutral-500"> · faltan {missingCount}</span> : null}
@@ -161,7 +161,7 @@ export default function SolarReadinessChecklist() {
             )}
           </div>
 
-          <div className="mt-3 text-xs text-neutral-600">
+          <div className="mt-3 text-xs text-text-secondary">
             Nota: esta checklist es orientativa y no reemplaza una evaluación técnica en sitio.
           </div>
         </div>

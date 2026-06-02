@@ -14,7 +14,7 @@ export default function ThermalReadinessPage() {
         <h1 className="text-2xl font-semibold tracking-tight">
           Checklist: ¿Estoy listo para un termotanque solar?
         </h1>
-        <p className="text-sm text-neutral-600">
+        <p className="text-sm text-text-secondary">
           Guía orientativa para ordenar decisiones antes de invertir en solar térmica. No reemplaza una evaluación técnica
           en sitio.
         </p>

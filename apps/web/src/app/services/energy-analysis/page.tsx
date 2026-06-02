@@ -7,7 +7,7 @@ export default function AnalisisEnergeticoPage() {
           Análisis energético para viviendas en Argentina
         </h1>
 
-        <p className="mt-4 text-lg text-neutral-600">
+        <p className="mt-4 text-lg text-text-secondary">
           Descubrí cómo reducir costos energéticos y evaluar mejoras
           sustentables para tu hogar.
         </p>
@@ -25,7 +25,7 @@ export default function AnalisisEnergeticoPage() {
               Consumo energético estimado
             </h3>
 
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-text-secondary">
               Evaluación del consumo anual y mensual de la vivienda.
             </p>
           </div>
@@ -35,7 +35,7 @@ export default function AnalisisEnergeticoPage() {
               Recomendaciones de ahorro
             </h3>
 
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-text-secondary">
               Mejoras sugeridas para reducir pérdidas energéticas.
             </p>
           </div>
@@ -45,7 +45,7 @@ export default function AnalisisEnergeticoPage() {
               Evaluación de paneles solares
             </h3>
 
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-text-secondary">
               Estimación de ahorro y retorno de inversión.
             </p>
           </div>
@@ -55,7 +55,7 @@ export default function AnalisisEnergeticoPage() {
               Reporte personalizado
             </h3>
 
-            <p className="mt-2 text-neutral-600">
+            <p className="mt-2 text-text-secondary">
               Entrega de resultados resumidos en PDF.
             </p>
           </div>
@@ -63,7 +63,7 @@ export default function AnalisisEnergeticoPage() {
       </section>
 
       {/* PRICE */}
-      <section className="mt-12 rounded-2xl border p-6">
+      <section className="mt-12 rounded-[1.75rem] border border-border-soft bg-surface p-6 transition hover:-translate-y-1 hover:shadow-sm">
         <h2 className="text-2xl font-semibold">
           Precio lanzamiento
         </h2>
@@ -72,7 +72,7 @@ export default function AnalisisEnergeticoPage() {
           Desde ARS 15.000
         </p>
 
-        <p className="mt-3 text-neutral-600">
+        <p className="mt-3 text-text-secondary">
           Precio beta por tiempo limitado.
         </p>
       </section>
@@ -91,7 +91,7 @@ export default function AnalisisEnergeticoPage() {
         <div className="mt-6 flex flex-wrap gap-4">
           <a
             href="mailto:tu-email@ejemplo.com"
-            className="rounded-xl bg-black px-5 py-3 text-white"
+            className="rounded-2xl bg-primary px-5 py-3 text-white"
           >
             Contactar por email
           </a>

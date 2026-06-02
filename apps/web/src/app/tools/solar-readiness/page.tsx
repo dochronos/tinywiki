@@ -14,7 +14,7 @@ export default function SolarReadinessPage() {
         <h1 className="text-2xl font-semibold tracking-tight">
           Checklist: ¿Estoy listo para energía solar?
         </h1>
-        <p className="text-sm text-neutral-600">
+        <p className="text-sm text-text-secondary">
           Guía orientativa para ordenar decisiones antes de invertir en un sistema solar. No reemplaza una evaluación
           técnica en sitio.
         </p>

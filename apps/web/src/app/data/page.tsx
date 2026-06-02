@@ -11,7 +11,7 @@ export default function DataPage() {
     <main className="mx-auto max-w-6xl px-6 py-10">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">Datos y BI</h1>
-        <p className="text-sm text-neutral-600">
+        <p className="text-sm text-text-secondary">
           Este proyecto incluye un dashboard construido en{" "}
           <strong>Power BI Desktop</strong> a partir del dataset de proveedores.
           El embed web directo requiere Power BI Service con cuenta
@@ -38,7 +38,7 @@ export default function DataPage() {
       <section className="mt-8 grid gap-4 lg:grid-cols-3">
         <div className="rounded-2xl border p-5 shadow-sm lg:col-span-2">
           <h2 className="text-lg font-medium">Power BI dashboard (Desktop)</h2>
-          <p className="mt-2 text-sm text-neutral-600">
+          <p className="mt-2 text-sm text-text-secondary">
             Visualización del dashboard conectado al dataset de proveedores
             (categorías, provincias/ciudades, verificación y filtros).
           </p>
@@ -56,13 +56,13 @@ export default function DataPage() {
           <h2 className="text-lg font-medium">Archivos del proyecto</h2>
           <ul className="mt-3 space-y-2 text-sm">
             <li>
-              <span className="text-neutral-600">Dataset (CSV): </span>
+              <span className="text-text-secondary">Dataset (CSV): </span>
               <code className="rounded bg-neutral-100 px-1 py-0.5">
                 data/sheets/providers.csv
               </code>
             </li>
             <li>
-              <span className="text-neutral-600">Power BI file: </span>
+              <span className="text-text-secondary">Power BI file: </span>
               <code className="rounded bg-neutral-100 px-1 py-0.5">
                 bi/powerbi/tinywiki_providers.pbix
               </code>

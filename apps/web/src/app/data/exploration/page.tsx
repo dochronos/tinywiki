@@ -153,7 +153,7 @@ export default function DataExplorationPage() {
     <main className="mx-auto max-w-5xl px-6 py-12">
       <h1 className="text-3xl font-bold">Data Exploration</h1>
 
-      <p className="mt-4 text-neutral-600">
+      <p className="mt-4 text-text-secondary">
         Quick insights derived from the TinyWiki providers dataset.
       </p>
 

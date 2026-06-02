@@ -12,7 +12,7 @@ export default function SolarCalculatorPage() {
     <main className="mx-auto max-w-3xl px-6 py-10">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">Calculadora solar (Argentina)</h1>
-        <p className="text-sm text-neutral-600">
+        <p className="text-sm text-text-secondary">
           Estimación orientativa del tamaño del sistema (rango). No es una cotización ni reemplaza una evaluación técnica
           en sitio.
         </p>

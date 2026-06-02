@@ -26,7 +26,7 @@ export default function SolarCalculator() {
     <div className="rounded-2xl border p-5 shadow-sm">
       <div className="grid gap-4 md:grid-cols-3">
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-neutral-600">Consumo mensual (kWh/mes)</label>
+          <label className="text-xs text-text-secondary">Consumo mensual (kWh/mes)</label>
           <input
             className="rounded-xl border px-3 py-2 text-sm"
             inputMode="decimal"
@@ -41,7 +41,7 @@ export default function SolarCalculator() {
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-neutral-600">Provincia</label>
+          <label className="text-xs text-text-secondary">Provincia</label>
           <select
             className="rounded-xl border px-3 py-2 text-sm"
             value={province}
@@ -60,7 +60,7 @@ export default function SolarCalculator() {
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-neutral-600">Objetivo</label>
+          <label className="text-xs text-text-secondary">Objetivo</label>
           <select
             className="rounded-xl border px-3 py-2 text-sm"
             value={goal}
@@ -77,7 +77,7 @@ export default function SolarCalculator() {
       </div>
 
       <div className="mt-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div className="text-sm text-neutral-600">
+        <div className="text-sm text-text-secondary">
           {parsedKwh ? (
             <>
               Consumo: <span className="font-medium">{parsedKwh}</span> kWh/mes
@@ -126,7 +126,7 @@ export default function SolarCalculator() {
 
           <details className="mt-4 rounded-xl border bg-white p-3">
             <summary className="cursor-pointer text-sm font-medium">Supuestos usados</summary>
-            <div className="mt-2 space-y-1 text-xs text-neutral-600">
+            <div className="mt-2 space-y-1 text-xs text-text-secondary">
               <div>• Horas solares promedio (provincia): {result.psH} h/día</div>
               <div>• Factor de pérdidas (conservador): {result.lossFactor}</div>
               <div>• Cobertura objetivo aplicada: {Math.round(result.targetCoverage * 100)}%</div>

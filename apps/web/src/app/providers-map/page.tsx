@@ -115,7 +115,7 @@ export default function ProvidersMapPage() {
     <main className="mx-auto max-w-6xl px-6 py-10">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">Mapa de proveedores</h1>
-        <p className="text-sm text-neutral-600">
+        <p className="text-sm text-text-secondary">
           Vista geográfica del dataset de proveedores en Argentina. Esta versión usa ubicaciones aproximadas por ciudad.
         </p>
 

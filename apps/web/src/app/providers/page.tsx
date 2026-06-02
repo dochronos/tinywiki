@@ -106,7 +106,7 @@ export default function ProvidersPage() {
     <main className="mx-auto max-w-6xl px-6 py-10">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">Proveedores</h1>
-        <p className="text-sm text-neutral-600">
+        <p className="text-sm text-text-secondary">
           Base consultable de proveedores locales en Argentina (fuente + última verificación). Este dataset también se usa
           para análisis y BI (Power BI).
         </p>
@@ -130,7 +130,7 @@ export default function ProvidersPage() {
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-base font-medium">Exploración geográfica</h2>
-            <p className="text-sm text-neutral-600">
+            <p className="text-sm text-text-secondary">
               También podés recorrer el dataset en una vista visual por ciudad y provincia.
             </p>
           </div>
