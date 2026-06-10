@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-
+import { Card } from "@/components/ui/card";
+import { SectionCard } from "@/components/ui/section-card";
 import { cityFactors, type CityKey } from "@/lib/energy/cityFactors";
 
 import {
@@ -426,136 +427,128 @@ export default function EcoBuildInsightPage() {
 
           {/* Energy Summary */}
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-              <p className="text-sm text-neutral-500">Ciudad</p>
+            <Card>
+              <p className="text-sm text-text-secondary">Ciudad</p>
 
               <p className="mt-2 text-lg font-semibold">{result.cityLabel}</p>
-            </div>
+            </Card>
 
-            <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-              <p className="text-sm text-neutral-500">Tipo de vivienda</p>
+            <Card>
+              <p className="text-sm text-text-secondary">Tipo de vivienda</p>
 
               <p className="mt-2 text-lg font-semibold">
                 {result.housingLabel}
               </p>
-            </div>
+            </Card>
 
-            <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-              <p className="text-sm text-neutral-500">Puntaje energético</p>
+            <Card>
+              <p className="text-sm text-text-secondary">Puntaje energético</p>
 
               <p className="mt-2 text-lg font-semibold">{result.score}/100</p>
-            </div>
+            </Card>
           </div>
 
           {/* Energy Report */}
-          <div className="rounded-3xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
-            <h3 className="text-lg font-semibold">Resumen del análisis</h3>
-
-            <p className="mt-3 leading-7 text-neutral-700">{result.summary}</p>
+          <SectionCard title="Resumen del análisis">
+            <p className="leading-7 text-text-secondary">{result.summary}</p>
 
             <div className="mt-6 grid gap-4 md:grid-cols-3">
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">Estado energético</p>
+              <Card>
+                <p className="text-sm text-text-secondary">Estado energético</p>
 
                 <p className="mt-2 text-lg font-semibold">{result.status}</p>
-              </div>
+              </Card>
 
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">Prioridad de mejora</p>
+              <Card>
+                <p className="text-sm text-text-secondary">
+                  Prioridad de mejora
+                </p>
 
                 <p className="mt-2 text-lg font-semibold">{result.priority}</p>
-              </div>
+              </Card>
 
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">
+              <Card>
+                <p className="text-sm text-text-secondary">
                   Ahorro potencial anual
                 </p>
 
                 <p className="mt-2 text-lg font-semibold">
                   ${result.potentialSavings}
                 </p>
-              </div>
+              </Card>
             </div>
-          </div>
+          </SectionCard>
 
           {/* Insights */}
-          <div className="rounded-3xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
-            <h3 className="text-lg font-semibold">Insights personalizados</h3>
-
-            <div className="mt-4 space-y-4">
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">Perfil energético</p>
+          <SectionCard title="Insights personalizados">
+            <div className="space-y-4">
+              <Card>
+                <p className="text-sm text-text-secondary">Perfil energético</p>
 
                 <p className="mt-2 text-lg font-semibold">
                   {result.energyProfile}
                 </p>
-              </div>
+              </Card>
 
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">
+              <Card>
+                <p className="text-sm text-text-secondary">
                   Mejora principal sugerida
                 </p>
 
-                <p className="mt-2 leading-7 text-neutral-700">
+                <p className="mt-2 leading-7 text-text-secondary">
                   {result.mainRecommendation}
                 </p>
-              </div>
+              </Card>
             </div>
-          </div>
+          </SectionCard>
 
           {/* Benchmark */}
-          <div className="rounded-3xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
-            <h3 className="text-lg font-semibold">Comparación energética</h3>
-
+          <SectionCard title="Comparación energética">
             <p className="mt-2 text-text-secondary">
               Comparación estimada frente a viviendas similares.
             </p>
 
             <div className="mt-6 grid gap-4 md:grid-cols-3">
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">Tu consumo anual</p>
+              <Card>
+                <p className="text-sm text-text-secondary">Tu consumo anual</p>
 
                 <p className="mt-2 text-lg font-semibold">
                   {result.consumption} kWh
                 </p>
-              </div>
+              </Card>
 
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">Promedio estimado</p>
+              <Card>
+                <p className="text-sm text-text-secondary">Promedio estimado</p>
 
                 <p className="mt-2 text-lg font-semibold">
                   {result.benchmark} kWh
                 </p>
-              </div>
+              </Card>
 
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">Resultado</p>
+              <Card>
+                <p className="text-sm text-text-secondary">Resultado</p>
 
                 <p className="mt-2 text-lg font-semibold">
                   {result.benchmarkStatus}
                 </p>
-              </div>
+              </Card>
             </div>
 
-            <div className="mt-4 rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-              <p className="leading-7 text-neutral-700">
+            <Card className="mt-4">
+              <p className="leading-7 text-text-secondary">
                 {result.benchmarkMessage}
               </p>
-            </div>
-          </div>
+            </Card>
+          </SectionCard>
 
           {/* Methodology */}
-          <div className="rounded-3xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
-            <h3 className="text-lg font-semibold">
-              ¿Cómo se calcula esta estimación?
-            </h3>
-
-            <p className="mt-2 text-text-secondary">
+          <SectionCard title="¿Cómo se calcula esta estimación?">
+            <p className="text-text-secondary">
               EcoBuild utiliza estimaciones orientativas basadas en superficie,
               ubicación y mejoras energéticas seleccionadas.
             </p>
 
-            <ul className="mt-5 space-y-3 text-sm leading-6 text-neutral-700">
+            <ul className="mt-5 space-y-3 text-sm leading-6 text-text-secondary">
               <li>• Consumo base estimado por m² de vivienda.</li>
 
               <li>• Ajuste climático según ciudad seleccionada.</li>
@@ -575,36 +568,36 @@ export default function EcoBuildInsightPage() {
                 técnica profesional.
               </li>
             </ul>
-          </div>
+          </SectionCard>
 
           {/* Action Plan */}
-          <div className="rounded-3xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
-            <h3 className="text-lg font-semibold">Plan sugerido de mejora</h3>
-
-            <p className="mt-2 text-text-secondary">
+          <SectionCard title="Plan sugerido de mejora">
+            <p className="text-text-secondary">
               Próximos pasos recomendados según tu configuración actual.
             </p>
 
             <div className="mt-5 grid gap-4 md:grid-cols-3">
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">Mejora prioritaria</p>
+              <Card>
+                <p className="text-sm text-text-secondary">
+                  Mejora prioritaria
+                </p>
 
                 <p className="mt-2 font-semibold">{result.actionTitle}</p>
-              </div>
+              </Card>
 
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">Impacto esperado</p>
+              <Card>
+                <p className="text-sm text-text-secondary">Impacto esperado</p>
 
                 <p className="mt-2 font-semibold">{result.actionImpact}</p>
-              </div>
+              </Card>
 
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">Próximo paso</p>
+              <Card>
+                <p className="text-sm text-text-secondary">Próximo paso</p>
 
                 <p className="mt-2 font-semibold">{result.actionNextStep}</p>
-              </div>
+              </Card>
             </div>
-          </div>
+          </SectionCard>
 
           {/* Recommendations */}
           <div>
@@ -612,9 +605,7 @@ export default function EcoBuildInsightPage() {
 
             <ul className="mt-3 space-y-2">
               {result.recommendations.map((recommendation, index) => (
-                <li key={index} className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-4">
-                  {recommendation}
-                </li>
+                <Card key={index}>{recommendation}</Card>
               ))}
             </ul>
           </div>
@@ -626,7 +617,7 @@ export default function EcoBuildInsightPage() {
 
               <div className="mt-3 space-y-3">
                 {result.roi.map((item, index) => (
-                  <div key={index} className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
+                  <Card key={index}>
                     <p className="font-medium">{item.label}</p>
 
                     <div className="mt-2 space-y-1 text-sm text-neutral-700">
@@ -639,19 +630,15 @@ export default function EcoBuildInsightPage() {
                         {item.payback} años
                       </p>
                     </div>
-                  </div>
+                  </Card>
                 ))}
               </div>
             </div>
           )}
 
           {/* Download Report */}
-          <div className="rounded-2xl border rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
-            <h3 className="text-lg font-semibold">
-              Descargar reporte energético
-            </h3>
-
-            <p className="mt-2 text-text-secondary">
+          <SectionCard title="Descargar reporte energético">
+            <p className="text-text-secondary">
               Exportá este análisis para guardarlo, compartirlo o utilizarlo
               como referencia para futuras mejoras.
             </p>
@@ -662,50 +649,46 @@ export default function EcoBuildInsightPage() {
             >
               Descargar PDF
             </button>
-          </div>
+          </SectionCard>
 
           {/* Energy Readiness */}
-          <div className="rounded-3xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-6">
-            <h3 className="text-lg font-semibold">
-              Nivel de preparación energética
-            </h3>
-
-            <p className="mt-2 text-text-secondary">
+          <SectionCard title="Nivel de preparación energética">
+            <p className="text-text-secondary">
               Resumen general del desempeño energético estimado.
             </p>
 
             <div className="mt-5 grid gap-4 md:grid-cols-3">
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">Preparación</p>
+              <Card>
+                <p className="text-sm text-text-secondary">Preparación</p>
 
                 <p className="mt-2 text-lg font-semibold">
                   {result.readinessLevel}
                 </p>
-              </div>
+              </Card>
 
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">
+              <Card>
+                <p className="text-sm text-text-secondary">
                   Confianza orientativa
                 </p>
 
                 <p className="mt-2 text-lg font-semibold">
                   {result.confidenceLevel}
                 </p>
-              </div>
+              </Card>
 
-              <div className="rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-                <p className="text-sm text-neutral-500">Resultado general</p>
+              <Card>
+                <p className="text-sm text-text-secondary">Resultado general</p>
 
                 <p className="mt-2 text-lg font-semibold">{result.status}</p>
-              </div>
+              </Card>
             </div>
 
-            <div className="mt-4 rounded-2xl border border-border-soft rounded-[2rem] border border-border-soft bg-surface p-10 p-5">
-              <p className="leading-7 text-neutral-700">
+            <Card className="mt-4">
+              <p className="leading-7 text-text-secondary">
                 {result.readinessMessage}
               </p>
-            </div>
-          </div>
+            </Card>
+          </SectionCard>
 
           {/* CTA */}
           <div className="border-t pt-6">
