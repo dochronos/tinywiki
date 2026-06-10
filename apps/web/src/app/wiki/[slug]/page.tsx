@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllWikiSlugs } from "@/lib/wiki";
+import Link from "next/link";
+import { Card } from "@/components/ui/card";
 
 const WIKI_DIR = path.join(process.cwd(), "src", "content", "wiki");
 
@@ -71,9 +73,30 @@ export default async function WikiArticlePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <article className="prose max-w-none">
-        <MDXRemote source={content} />
-      </article>
+      <>
+        <Card className="mb-8 bg-surface">
+          <Link
+            href="/wiki"
+            className="text-sm text-text-secondary hover:underline"
+          >
+            ← Volver a Wiki
+          </Link>
+
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight">
+            {title}
+          </h1>
+
+          {lastUpdated && (
+            <p className="mt-2 text-sm text-text-secondary">
+              Actualizado: {lastUpdated}
+            </p>
+          )}
+        </Card>
+
+        <article className="prose max-w-none">
+          <MDXRemote source={content} />
+        </article>
+      </>
     </main>
   );
 }

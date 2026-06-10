@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Card } from "@/components/ui/card";
 
 export const metadata = {
   title: "Wiki de sustentabilidad y energía solar en Argentina | TinyWiki",
@@ -24,22 +25,25 @@ export default function WikiPage() {
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-10">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight">Wiki</h1>
-        <p className="text-sm text-text-secondary">
-          Artículos y guías prácticas sobre sustentabilidad, energía solar y
-          soluciones off-grid, con foco en Argentina.
-        </p>
+      <header>
+        <Card className="bg-surface">
+          <h1 className="text-3xl font-semibold tracking-tight">Wiki</h1>
 
-        <div className="pt-2 text-sm">
-          <Link href="/tools" className="underline">
-            Ir a herramientas
-          </Link>
-          <span className="text-neutral-400"> · </span>
-          <Link href="/providers" className="underline">
-            Ver proveedores
-          </Link>
-        </div>
+          <p className="mt-3 text-text-secondary">
+            Artículos y guías prácticas sobre sustentabilidad, energía solar y
+            soluciones off-grid, con foco en Argentina.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-4 text-sm">
+            <Link href="/tools" className="font-medium hover:underline">
+              Ir a herramientas
+            </Link>
+
+            <Link href="/providers" className="font-medium hover:underline">
+              Ver proveedores
+            </Link>
+          </div>
+        </Card>
       </header>
 
       <section className="mt-8 grid gap-4">
@@ -47,10 +51,14 @@ export default function WikiPage() {
           <Link
             key={t.title}
             href={t.href}
-            className="block rounded-2xl border p-5 shadow-sm hover:bg-neutral-50"
+            className="transition-opacity hover:opacity-90"
           >
-            <h2 className="text-lg font-medium">{t.title}</h2>
-            <p className="mt-2 text-sm text-text-secondary">{t.description}</p>
+            <Card>
+              <h2 className="text-lg font-medium">{t.title}</h2>
+              <p className="mt-2 text-sm text-text-secondary">
+                {t.description}
+              </p>
+            </Card>
           </Link>
         ))}
       </section>
