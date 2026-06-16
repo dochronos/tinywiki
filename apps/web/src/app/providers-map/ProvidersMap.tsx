@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LOCATION_POINTS } from "@/lib/locations";
+import { Card } from "@/components/ui/card";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
@@ -150,7 +151,7 @@ export default function ProvidersMap({
 
   return (
     <div className="space-y-4">
-      <div className="rounded-2xl border p-4 shadow-sm">
+      <Card className="p-4">
         <label className="text-sm font-medium">Categoría</label>
         <select
           className="mt-2 block rounded-xl border px-3 py-2 text-sm"
@@ -162,11 +163,11 @@ export default function ProvidersMap({
             <option key={c}>{c}</option>
           ))}
         </select>
-      </div>
+      </Card>
 
-      <div className="overflow-hidden rounded-2xl border">
+      <Card className="overflow-hidden p-0">
         <div ref={mapRef} style={{ height: "620px", width: "100%" }} />
-      </div>
+      </Card>
     </div>
   );
 }

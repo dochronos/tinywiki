@@ -1,7 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import Link from "next/link";
-import ProvidersMap from "./ProvidersMap";
+import { Card } from "@/components/ui/card";
+import ProvidersMap from "./ProvidersMapClient";
 
 export const metadata = {
   title: "Mapa de proveedores en Argentina | TinyWiki",
@@ -29,10 +30,25 @@ function resolveProvidersCsvPath() {
   const a = path.join(process.cwd(), "data", "sheets", "providers.csv");
   if (fs.existsSync(a)) return a;
 
-  const b = path.join(process.cwd(), "..", "..", "data", "sheets", "providers.csv");
+  const b = path.join(
+    process.cwd(),
+    "..",
+    "..",
+    "data",
+    "sheets",
+    "providers.csv"
+  );
   if (fs.existsSync(b)) return b;
 
-  const c = path.join(process.cwd(), "..", "..", "..", "data", "sheets", "providers.csv");
+  const c = path.join(
+    process.cwd(),
+    "..",
+    "..",
+    "..",
+    "data",
+    "sheets",
+    "providers.csv"
+  );
   if (fs.existsSync(c)) return c;
 
   throw new Error("providers.csv not found.");
@@ -48,12 +64,14 @@ function splitCsvLine(line: string): string[] {
 
     if (ch === '"') {
       const next = line[i + 1];
+
       if (inQuotes && next === '"') {
         cur += '"';
         i++;
       } else {
         inQuotes = !inQuotes;
       }
+
       continue;
     }
 
@@ -113,21 +131,34 @@ export default function ProvidersMapPage() {
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight">Mapa de proveedores</h1>
-        <p className="text-sm text-text-secondary">
-          Vista geográfica del dataset de proveedores en Argentina. Esta versión usa ubicaciones aproximadas por ciudad.
-        </p>
+      <header>
+        <Card className="bg-surface">
+          <h1 className="text-3xl font-semibold tracking-tight">
+            Mapa de proveedores
+          </h1>
 
-        <div className="pt-2 text-sm">
-          <Link href="/providers" className="underline">
-            Volver a proveedores
-          </Link>
-          <span className="text-neutral-400"> · </span>
-          <Link href="/data" className="underline">
-            Datos y BI
-          </Link>
-        </div>
+          <p className="mt-3 text-text-secondary">
+            Vista geográfica del dataset de proveedores en Argentina.
+            Esta versión utiliza ubicaciones aproximadas por ciudad para
+            facilitar la exploración visual.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-4 text-sm">
+            <Link
+              href="/providers"
+              className="font-medium hover:underline"
+            >
+              Volver a proveedores
+            </Link>
+
+            <Link
+              href="/data"
+              className="font-medium hover:underline"
+            >
+              Datos y BI
+            </Link>
+          </div>
+        </Card>
       </header>
 
       <section className="mt-6">

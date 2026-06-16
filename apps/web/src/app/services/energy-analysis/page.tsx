@@ -1,16 +1,44 @@
+import Link from "next/link";
+import { Card } from "@/components/ui/card";
+
 export default function AnalisisEnergeticoPage() {
   return (
     <main className="mx-auto max-w-4xl px-6 py-12">
       {/* HERO */}
       <section>
-        <h1 className="text-4xl font-bold">
-          Análisis energético para viviendas en Argentina
-        </h1>
+        <Card className="bg-surface">
+          <div className="flex flex-wrap gap-4 text-sm">
+            <Link
+              href="/tools"
+              className="font-medium hover:underline"
+            >
+              Herramientas
+            </Link>
 
-        <p className="mt-4 text-lg text-text-secondary">
-          Descubrí cómo reducir costos energéticos y evaluar mejoras
-          sustentables para tu hogar.
-        </p>
+            <Link
+              href="/wiki"
+              className="font-medium hover:underline"
+            >
+              Wiki
+            </Link>
+
+            <Link
+              href="/providers"
+              className="font-medium hover:underline"
+            >
+              Proveedores
+            </Link>
+          </div>
+
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight">
+            Análisis energético para viviendas en Argentina
+          </h1>
+
+          <p className="mt-4 text-text-secondary">
+            Descubrí cómo reducir costos energéticos y evaluar mejoras
+            sustentables para tu hogar.
+          </p>
+        </Card>
       </section>
 
       {/* BENEFITS */}
@@ -20,7 +48,7 @@ export default function AnalisisEnergeticoPage() {
         </h2>
 
         <div className="mt-6 grid gap-4 md:grid-cols-2">
-          <div className="rounded-2xl border p-5">
+          <Card>
             <h3 className="font-semibold">
               Consumo energético estimado
             </h3>
@@ -28,9 +56,9 @@ export default function AnalisisEnergeticoPage() {
             <p className="mt-2 text-text-secondary">
               Evaluación del consumo anual y mensual de la vivienda.
             </p>
-          </div>
+          </Card>
 
-          <div className="rounded-2xl border p-5">
+          <Card>
             <h3 className="font-semibold">
               Recomendaciones de ahorro
             </h3>
@@ -38,9 +66,9 @@ export default function AnalisisEnergeticoPage() {
             <p className="mt-2 text-text-secondary">
               Mejoras sugeridas para reducir pérdidas energéticas.
             </p>
-          </div>
+          </Card>
 
-          <div className="rounded-2xl border p-5">
+          <Card>
             <h3 className="font-semibold">
               Evaluación de paneles solares
             </h3>
@@ -48,9 +76,9 @@ export default function AnalisisEnergeticoPage() {
             <p className="mt-2 text-text-secondary">
               Estimación de ahorro y retorno de inversión.
             </p>
-          </div>
+          </Card>
 
-          <div className="rounded-2xl border p-5">
+          <Card>
             <h3 className="font-semibold">
               Reporte personalizado
             </h3>
@@ -58,7 +86,7 @@ export default function AnalisisEnergeticoPage() {
             <p className="mt-2 text-text-secondary">
               Entrega de resultados resumidos en PDF.
             </p>
-          </div>
+          </Card>
         </div>
       </section>
 
@@ -99,6 +127,7 @@ export default function AnalisisEnergeticoPage() {
           <a
             href="https://wa.me/549XXXXXXXXXX"
             target="_blank"
+            rel="noopener noreferrer"
             className="rounded-xl border px-5 py-3"
           >
             WhatsApp

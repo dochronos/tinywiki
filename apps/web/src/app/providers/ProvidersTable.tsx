@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Card } from "@/components/ui/card";
 
 export type ProviderRow = {
   provider_id: string;
@@ -19,12 +20,24 @@ export type ProviderRow = {
 };
 
 function uniqueSorted(values: string[]) {
-  return Array.from(new Set(values.filter(Boolean))).sort((a, b) => a.localeCompare(b));
+  return Array.from(new Set(values.filter(Boolean))).sort((a, b) =>
+    a.localeCompare(b),
+  );
 }
 
-export default function ProvidersTable({ providers }: { providers: ProviderRow[] }) {
-  const categories = useMemo(() => uniqueSorted(providers.map((p) => p.category)), [providers]);
-  const provinces = useMemo(() => uniqueSorted(providers.map((p) => p.province)), [providers]);
+export default function ProvidersTable({
+  providers,
+}: {
+  providers: ProviderRow[];
+}) {
+  const categories = useMemo(
+    () => uniqueSorted(providers.map((p) => p.category)),
+    [providers],
+  );
+  const provinces = useMemo(
+    () => uniqueSorted(providers.map((p) => p.province)),
+    [providers],
+  );
 
   const [category, setCategory] = useState<string>("Todos");
   const [province, setProvince] = useState<string>("Todas");
@@ -54,25 +67,29 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
   }, [providers, category, province, q]);
 
   return (
-    <div className="rounded-2xl border p-5 shadow-sm">
+    <Card>
+      {" "}
       <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        {" "}
         <div className="flex flex-wrap gap-3">
+          {" "}
           <div className="flex flex-col gap-1">
+            {" "}
             <label className="text-xs text-text-secondary">Categoría</label>
             <select
               className="rounded-xl border px-3 py-2 text-sm"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
+              {" "}
               <option>Todos</option>
               {categories.map((c) => (
                 <option key={c} value={c}>
-                  {c}
+                  {c}{" "}
                 </option>
-              ))}
-            </select>
+              ))}{" "}
+            </select>{" "}
           </div>
-
           <div className="flex flex-col gap-1">
             <label className="text-xs text-text-secondary">Provincia</label>
             <select
@@ -88,7 +105,6 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
               ))}
             </select>
           </div>
-
           <div className="flex flex-col gap-1">
             <label className="text-xs text-text-secondary">Búsqueda</label>
             <input
@@ -99,13 +115,11 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
             />
           </div>
         </div>
-
         <div className="text-xs text-text-secondary">
           Mostrando <span className="font-medium">{filtered.length}</span> de{" "}
           <span className="font-medium">{providers.length}</span>
         </div>
       </div>
-
       <div className="mt-4 overflow-x-auto">
         <table className="w-full min-w-[900px] border-separate border-spacing-0">
           <thead>
@@ -123,36 +137,59 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
               <tr key={p.provider_id} className="text-sm">
                 <td className="border-b px-3 py-3 align-top">
                   <div className="font-medium">{p.provider_name}</div>
+
                   {p.subcategory ? (
-                    <div className="mt-1 text-xs text-text-secondary">{p.subcategory}</div>
+                    <div className="mt-1 text-xs text-text-secondary">
+                      {p.subcategory}
+                    </div>
                   ) : null}
-                  {p.notes ? <div className="mt-2 text-xs text-text-secondary">{p.notes}</div> : null}
+
+                  {p.notes ? (
+                    <div className="mt-2 text-xs text-text-secondary">
+                      {p.notes}
+                    </div>
+                  ) : null}
                 </td>
 
                 <td className="border-b px-3 py-3 align-top">{p.category}</td>
 
                 <td className="border-b px-3 py-3 align-top">
                   <div>{p.province}</div>
-                  {p.city ? <div className="text-xs text-text-secondary">{p.city}</div> : null}
+                  {p.city ? (
+                    <div className="text-xs text-text-secondary">{p.city}</div>
+                  ) : null}
                 </td>
 
                 <td className="border-b px-3 py-3 align-top">
                   <div className="flex flex-col gap-1 text-xs">
                     {p.website ? (
-                      <a className="underline" href={p.website} target="_blank" rel="noreferrer">
+                      <a
+                        className="underline"
+                        href={p.website}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         Sitio web
                       </a>
                     ) : null}
+
                     {p.email ? <span>{p.email}</span> : null}
                     {p.whatsapp ? <span>{p.whatsapp}</span> : null}
                   </div>
                 </td>
 
-                <td className="border-b px-3 py-3 align-top text-xs">{p.last_verified || "-"}</td>
+                <td className="border-b px-3 py-3 align-top text-xs">
+                  {p.last_verified || "-"}
+                </td>
 
                 <td className="border-b px-3 py-3 align-top">
                   {p.source_url ? (
-                    <a className="underline text-xs" href={p.source_url} target="_blank" rel="noreferrer">
+                    <a
+                      className="underline text-xs"
+                      href={p.source_url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       Link
                     </a>
                   ) : (
@@ -164,7 +201,10 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
 
             {filtered.length === 0 ? (
               <tr>
-                <td className="px-3 py-6 text-sm text-text-secondary" colSpan={6}>
+                <td
+                  className="px-3 py-6 text-sm text-text-secondary"
+                  colSpan={6}
+                >
                   No hay resultados con esos filtros.
                 </td>
               </tr>
@@ -172,6 +212,6 @@ export default function ProvidersTable({ providers }: { providers: ProviderRow[]
           </tbody>
         </table>
       </div>
-    </div>
+    </Card>
   );
 }
