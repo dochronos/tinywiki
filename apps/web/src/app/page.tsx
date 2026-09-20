@@ -36,29 +36,36 @@ const libraryItems = [
   },
 ];
 
-const featuredTools = [
+const freeTools = [
   {
-    href: "/tools/ecobuild-insight",
-    badge: "v1.0",
-    icon: "☼",
-    title: "EcoBuild Insight",
-    text: "Estimá consumo energético, oportunidades de mejora y retorno orientativo.",
+    href: "/tools/solar-readiness",
+    badge: "FREE",
+    icon: "⌂",
+    title: "Solar Readiness",
+    text: "Evaluá si una vivienda está preparada para avanzar hacia energía solar.",
   },
   {
     href: "/tools/solar-calculator",
-    badge: "v1.0",
+    badge: "FREE",
     icon: "◫",
     title: "Solar Calculator",
     text: "Estimá un rango inicial de potencia solar y cantidad de paneles.",
   },
   {
-    href: "/tools/solar-readiness",
-    badge: "BETA",
-    icon: "⌂",
-    title: "Solar Readiness",
-    text: "Evaluá si una vivienda está preparada para avanzar hacia energía solar.",
+    href: "/tools/termotanque-readiness",
+    badge: "FREE",
+    icon: "♨",
+    title: "Thermal Readiness",
+    text: "Revisá las condiciones básicas antes de evaluar un termotanque solar.",
   },
 ];
+
+const energyAnalysis = {
+  href: "/tools/ecobuild-insight",
+  badge: "ENERGY ANALYSIS",
+  title: "EcoBuild Insight",
+  text: "Analizá el desempeño energético de tu vivienda, identificá oportunidades de mejora y explorá posibles ahorros y retornos de inversión.",
+};
 
 export default function HomePage() {
   return (
@@ -171,7 +178,7 @@ export default function HomePage() {
                       href="/tools"
                       className="inline-flex min-h-12 items-center justify-center rounded-xl bg-primary px-6 text-sm font-medium text-white transition hover:opacity-90"
                     >
-                      Empezar a calcular
+                      Explorar herramientas
                     </Link>
                   </div>
                 </div>
@@ -221,6 +228,7 @@ export default function HomePage() {
                         <p className="tw-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-primary">
                           Schematic 04-A
                         </p>
+
                         <p className="mt-1 text-xs text-text-secondary">
                           Sustainable building system
                         </p>
@@ -230,6 +238,7 @@ export default function HomePage() {
                         <p className="font-serif text-3xl font-semibold text-secondary">
                           82%
                         </p>
+
                         <p className="tw-mono text-[9px] uppercase tracking-[0.14em] text-text-secondary">
                           Efficiency
                         </p>
@@ -284,21 +293,21 @@ export default function HomePage() {
             </div>
           </section>
 
-          {/* Featured Calculators */}
+          {/* Free Tools */}
           <section className="mt-12">
             <div className="flex items-end justify-between gap-4">
               <div>
                 <p className="tw-mono text-[10px] uppercase tracking-[0.18em] text-text-secondary">
-                  Featured calculators
+                  Free tools
                 </p>
 
                 <h2 className="mt-2 font-serif text-2xl font-semibold tracking-tight text-text-primary md:text-3xl">
-                  Herramientas destacadas
+                  Herramientas gratuitas
                 </h2>
 
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-text-secondary">
-                  Herramientas orientativas para explorar decisiones de
-                  sustentabilidad.
+                  Explorá, calculá y evaluá alternativas sin registrarte.
+                  Resultados orientativos para ayudarte a dar el próximo paso.
                 </p>
               </div>
 
@@ -311,7 +320,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-6 grid gap-5 md:grid-cols-3">
-              {featuredTools.map((tool) => (
+              {freeTools.map((tool) => (
                 <Link key={tool.href} href={tool.href}>
                   <Card className="group h-full overflow-hidden rounded-xl p-0 transition hover:-translate-y-1 hover:shadow-sm">
                     {/* Technical visual */}
@@ -372,6 +381,42 @@ export default function HomePage() {
             >
               View all tools
             </Link>
+          </section>
+
+          {/* Energy Analysis */}
+          <section className="mt-12">
+            <div className="rounded-[1.5rem] border border-border-soft bg-surface p-7 md:p-9">
+              <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+                <div>
+                  <p className="tw-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
+                    {energyAnalysis.badge}
+                  </p>
+
+                  <h2 className="mt-3 font-serif text-2xl font-semibold tracking-tight text-text-primary md:text-3xl">
+                    {energyAnalysis.title}
+                  </h2>
+
+                  <p className="mt-3 max-w-3xl text-sm leading-7 text-text-secondary">
+                    {energyAnalysis.text}
+                  </p>
+
+                  <p className="mt-4 max-w-3xl text-xs leading-6 text-text-secondary">
+                    Una herramienta más completa para transformar datos de tu
+                    vivienda en un análisis energético estructurado y
+                    personalizado.
+                  </p>
+                </div>
+
+                <div className="shrink-0">
+                  <Link
+                    href={energyAnalysis.href}
+                    className="inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+                  >
+                    Analizar mi vivienda →
+                  </Link>
+                </div>
+              </div>
+            </div>
           </section>
 
           {/* Contribution / Open Blueprint */}
