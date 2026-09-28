@@ -9,12 +9,6 @@ export const ENERGY_CONSTANTS = {
     familiar: 1,
   },
 
-  benchmarkKwh: {
-    tiny: 3000,
-    small: 4500,
-    familiar: 6500,
-  },
-
   efficiencyFactors: {
     insulation: 0.75,
     solar: 0.6,
@@ -31,5 +25,18 @@ export const ENERGY_CONSTANTS = {
     solar: 0.4,
     insulation: 0.25,
     windows: 0.15,
+  },
+
+  benchmarkKwh: {
+    tiny: 3000,
+    small: 4500,
+    familiar: 6500,
+  },
+
+  score: {
+    base: 40,
+    insulation: 20,
+    solar: 25,
+    doubleWindows: 15,
   },
 } as const;

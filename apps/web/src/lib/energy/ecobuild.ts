@@ -6,10 +6,7 @@ import {
   getPriorityLabel,
 } from "./recommendations";
 
-import {
-  getEnergyProfile,
-  getMainRecommendation,
-} from "./insights";
+import { getEnergyProfile, getMainRecommendation } from "./insights";
 
 import {
   getBenchmark,
@@ -27,13 +24,17 @@ import {
 
 import { ENERGY_CONSTANTS } from "./constants";
 
+export type HousingType = "tiny" | "small" | "familiar";
+
+export type WindowType = "simple" | "double";
+
 export type EcoBuildInput = {
   size: number;
   city: CityKey;
-  housingType: string;
+  housingType: HousingType;
   insulation: boolean;
   solar: boolean;
-  windows: string;
+  windows: WindowType;
 };
 
 export type ROI = {
@@ -75,30 +76,18 @@ export type EcoBuildResult = {
   confidenceLevel: string;
 };
 
-const HOUSING_LABELS = {
+const HOUSING_LABELS: Record<HousingType, string> = {
   tiny: "Tiny house",
   small: "Casa pequeña",
   familiar: "Casa familiar",
-} as const;
+};
 
-export function calculateEcoBuild(
-  input: EcoBuildInput,
-): EcoBuildResult {
-  const {
-    size,
-    city,
-    housingType,
-    insulation,
-    solar,
-    windows,
-  } = input;
+export function calculateEcoBuild(input: EcoBuildInput): EcoBuildResult {
+  const { size, city, housingType, insulation, solar, windows } = input;
 
   const selectedCity = cityFactors[city];
 
-  let consumption =
-    size *
-    ENERGY_CONSTANTS.baseKwhPerM2 *
-    selectedCity.factor;
+  let consumption = size * ENERGY_CONSTANTS.baseKwhPerM2 * selectedCity.factor;
 
   // Ajuste por tipo de vivienda
   if (housingType === "tiny") {
@@ -122,12 +111,9 @@ export function calculateEcoBuild(
     consumption *= ENERGY_CONSTANTS.efficiencyFactors.doubleWindows;
   }
 
-  const monthlyCost =
-    (consumption / 12) *
-    ENERGY_CONSTANTS.costPerKwh;
+  const monthlyCost = (consumption / 12) * ENERGY_CONSTANTS.costPerKwh;
 
-  const yearlyCost =
-    monthlyCost * 12;
+  const yearlyCost = monthlyCost * 12;
 
   // Recommendations
   const recommendations: string[] = [];
@@ -165,17 +151,13 @@ export function calculateEcoBuild(
       yearlySavings: Math.round(savings),
       payback: Math.max(
         1,
-        Math.round(
-          ENERGY_CONSTANTS.roiCosts.solar / savings,
-        ),
+        Math.round(ENERGY_CONSTANTS.roiCosts.solar / savings),
       ),
     });
   }
 
   if (!insulation) {
-    const savings =
-      yearlyCost *
-      ENERGY_CONSTANTS.roiSavings.insulation;
+    const savings = yearlyCost * ENERGY_CONSTANTS.roiSavings.insulation;
 
     roi.push({
       label: "Aislamiento térmico",
@@ -183,17 +165,13 @@ export function calculateEcoBuild(
       yearlySavings: Math.round(savings),
       payback: Math.max(
         1,
-        Math.round(
-          ENERGY_CONSTANTS.roiCosts.insulation / savings,
-        ),
+        Math.round(ENERGY_CONSTANTS.roiCosts.insulation / savings),
       ),
     });
   }
 
   if (windows === "simple") {
-    const savings =
-      yearlyCost *
-      ENERGY_CONSTANTS.roiSavings.windows;
+    const savings = yearlyCost * ENERGY_CONSTANTS.roiSavings.windows;
 
     roi.push({
       label: "Doble vidrio",
@@ -201,32 +179,27 @@ export function calculateEcoBuild(
       yearlySavings: Math.round(savings),
       payback: Math.max(
         1,
-        Math.round(
-          ENERGY_CONSTANTS.roiCosts.windows / savings,
-        ),
+        Math.round(ENERGY_CONSTANTS.roiCosts.windows / savings),
       ),
     });
   }
 
   // Energy score
-  let score = 40;
+  let score: number = ENERGY_CONSTANTS.score.base;
 
   if (insulation) {
-    score += 20;
+    score += ENERGY_CONSTANTS.score.insulation;
   }
 
   if (solar) {
-    score += 25;
+    score += ENERGY_CONSTANTS.score.solar;
   }
 
   if (windows === "double") {
-    score += 15;
+    score += ENERGY_CONSTANTS.score.doubleWindows;
   }
 
-  score = Math.min(
-    score,
-    100,
-  );
+  score = Math.min(score, 100);
 
   let efficiency = "Baja";
 
@@ -237,76 +210,43 @@ export function calculateEcoBuild(
   }
 
   // Derived insights
-  const summary =
-    generateSummary({
-      insulation,
-      solar,
-      windows,
-    });
+  const summary = generateSummary({
+    insulation,
+    solar,
+    windows,
+  });
 
-  const priority =
-    getPriorityLabel(score);
+  const priority = getPriorityLabel(score);
 
-  const status =
-    getEnergyStatus(score);
+  const status = getEnergyStatus(score);
 
-  const potentialSavings =
-    roi.reduce(
-      (total, item) =>
-        total +
-        item.yearlySavings,
-      0,
-    );
+  const potentialSavings = roi.reduce(
+    (total, item) => total + item.yearlySavings,
+    0,
+  );
 
-  const energyProfile =
-    getEnergyProfile(score);
+  const energyProfile = getEnergyProfile(score);
 
-  const mainRecommendation =
-    getMainRecommendation(
-      insulation,
-      solar,
-      windows,
-    );
+  const mainRecommendation = getMainRecommendation(insulation, solar, windows);
 
-  const benchmark =
-    getBenchmark(
-      housingType,
-    );
+  const benchmark = getBenchmark(housingType);
 
-  const benchmarkStatus =
-    getBenchmarkStatus(
-      consumption,
-      benchmark,
-    );
+  const benchmarkStatus = getBenchmarkStatus(consumption, benchmark);
 
-  const benchmarkMessage =
-    getBenchmarkMessage(
-      consumption,
-      benchmark,
-    );
+  const benchmarkMessage = getBenchmarkMessage(consumption, benchmark);
 
-  const actionPlan =
-    getActionPlan(
-      insulation,
-      solar,
-      windows,
-    );
+  const actionPlan = getActionPlan(insulation, solar, windows);
 
-  const readinessLevel =
-    getReadinessLevel(score);
+  const readinessLevel = getReadinessLevel(score);
 
-  const readinessMessage =
-    getReadinessMessage(score);
+  const readinessMessage = getReadinessMessage(score);
 
-  const confidenceLevel =
-    getConfidenceLevel(score);
+  const confidenceLevel = getConfidenceLevel(score);
 
   return {
-    consumption:
-      Math.round(consumption),
+    consumption: Math.round(consumption),
 
-    cost:
-      Math.round(monthlyCost),
+    cost: Math.round(monthlyCost),
 
     recommendations,
     roi,
@@ -314,8 +254,7 @@ export function calculateEcoBuild(
     score,
     efficiency,
 
-    cityLabel:
-      selectedCity.label,
+    cityLabel: selectedCity.label,
 
     summary,
     priority,
@@ -325,23 +264,17 @@ export function calculateEcoBuild(
     energyProfile,
     mainRecommendation,
 
-    housingLabel:
-      HOUSING_LABELS[
-        housingType as keyof typeof HOUSING_LABELS
-      ],
+    housingLabel: HOUSING_LABELS[housingType],
 
     benchmark,
     benchmarkStatus,
     benchmarkMessage,
 
-    actionTitle:
-      actionPlan.title,
+    actionTitle: actionPlan.title,
 
-    actionImpact:
-      actionPlan.impact,
+    actionImpact: actionPlan.impact,
 
-    actionNextStep:
-      actionPlan.nextStep,
+    actionNextStep: actionPlan.nextStep,
 
     readinessLevel,
     readinessMessage,
