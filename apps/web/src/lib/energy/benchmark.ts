@@ -1,21 +1,21 @@
-export function getBenchmark(
-  housingType: string
-) {
+import { ENERGY_CONSTANTS } from "./constants";
+
+export function getBenchmark(housingType: string) {
   switch (housingType) {
     case "tiny":
-      return 3000;
+      return ENERGY_CONSTANTS.benchmarkKwh.tiny;
 
     case "small":
-      return 4500;
+      return ENERGY_CONSTANTS.benchmarkKwh.small;
 
     default:
-      return 6500;
+      return ENERGY_CONSTANTS.benchmarkKwh.familiar;
   }
 }
 
 export function getBenchmarkStatus(
   consumption: number,
-  benchmark: number
+  benchmark: number,
 ) {
   return consumption <= benchmark
     ? "Mejor que el promedio"
@@ -24,7 +24,7 @@ export function getBenchmarkStatus(
 
 export function getBenchmarkMessage(
   consumption: number,
-  benchmark: number
+  benchmark: number,
 ) {
   if (consumption <= benchmark) {
     return "Tu vivienda muestra un desempeño energético favorable frente al promedio estimado.";

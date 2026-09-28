@@ -25,6 +25,8 @@ import {
   getConfidenceLevel,
 } from "./readiness";
 
+import { ENERGY_CONSTANTS } from "./constants";
+
 export type EcoBuildInput = {
   size: number;
   city: CityKey;
@@ -73,13 +75,6 @@ export type EcoBuildResult = {
   confidenceLevel: string;
 };
 
-const BASE_KWH_PER_M2 = 50;
-const COST_PER_KWH = 0.15;
-
-const SOLAR_COST = 4000;
-const INSULATION_COST = 1500;
-const WINDOWS_COST = 2000;
-
 const HOUSING_LABELS = {
   tiny: "Tiny house",
   small: "Casa pequeña",
@@ -102,34 +97,34 @@ export function calculateEcoBuild(
 
   let consumption =
     size *
-    BASE_KWH_PER_M2 *
+    ENERGY_CONSTANTS.baseKwhPerM2 *
     selectedCity.factor;
 
   // Ajuste por tipo de vivienda
   if (housingType === "tiny") {
-    consumption *= 0.7;
+    consumption *= ENERGY_CONSTANTS.housingFactors.tiny;
   }
 
   if (housingType === "small") {
-    consumption *= 0.9;
+    consumption *= ENERGY_CONSTANTS.housingFactors.small;
   }
 
   // Ajustes por mejoras
   if (insulation) {
-    consumption *= 0.75;
+    consumption *= ENERGY_CONSTANTS.efficiencyFactors.insulation;
   }
 
   if (solar) {
-    consumption *= 0.6;
+    consumption *= ENERGY_CONSTANTS.efficiencyFactors.solar;
   }
 
   if (windows === "double") {
-    consumption *= 0.85;
+    consumption *= ENERGY_CONSTANTS.efficiencyFactors.doubleWindows;
   }
 
   const monthlyCost =
     (consumption / 12) *
-    COST_PER_KWH;
+    ENERGY_CONSTANTS.costPerKwh;
 
   const yearlyCost =
     monthlyCost * 12;
@@ -161,17 +156,17 @@ export function calculateEcoBuild(
   if (!solar) {
     const savings =
       yearlyCost *
-      0.4 *
+      ENERGY_CONSTANTS.roiSavings.solar *
       selectedCity.solarEfficiency;
 
     roi.push({
       label: "Paneles solares",
-      cost: SOLAR_COST,
+      cost: ENERGY_CONSTANTS.roiCosts.solar,
       yearlySavings: Math.round(savings),
       payback: Math.max(
         1,
         Math.round(
-          SOLAR_COST / savings,
+          ENERGY_CONSTANTS.roiCosts.solar / savings,
         ),
       ),
     });
@@ -179,16 +174,17 @@ export function calculateEcoBuild(
 
   if (!insulation) {
     const savings =
-      yearlyCost * 0.25;
+      yearlyCost *
+      ENERGY_CONSTANTS.roiSavings.insulation;
 
     roi.push({
       label: "Aislamiento térmico",
-      cost: INSULATION_COST,
+      cost: ENERGY_CONSTANTS.roiCosts.insulation,
       yearlySavings: Math.round(savings),
       payback: Math.max(
         1,
         Math.round(
-          INSULATION_COST / savings,
+          ENERGY_CONSTANTS.roiCosts.insulation / savings,
         ),
       ),
     });
@@ -196,16 +192,17 @@ export function calculateEcoBuild(
 
   if (windows === "simple") {
     const savings =
-      yearlyCost * 0.15;
+      yearlyCost *
+      ENERGY_CONSTANTS.roiSavings.windows;
 
     roi.push({
       label: "Doble vidrio",
-      cost: WINDOWS_COST,
+      cost: ENERGY_CONSTANTS.roiCosts.windows,
       yearlySavings: Math.round(savings),
       payback: Math.max(
         1,
         Math.round(
-          WINDOWS_COST / savings,
+          ENERGY_CONSTANTS.roiCosts.windows / savings,
         ),
       ),
     });

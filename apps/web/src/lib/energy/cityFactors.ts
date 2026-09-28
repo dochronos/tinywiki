@@ -1,4 +1,10 @@
-export const cityFactors = {
+export type CityFactor = {
+  label: string;
+  factor: number;
+  solarEfficiency: number;
+};
+
+export const cityFactors: Record<string, CityFactor> = {
   buenos_aires: {
     label: "Buenos Aires",
     factor: 1,

@@ -1,11 +1,18 @@
 export const ENERGY_CONSTANTS = {
   baseKwhPerM2: 50,
+
   costPerKwh: 0.15,
 
   housingFactors: {
     tiny: 0.7,
     small: 0.9,
     familiar: 1,
+  },
+
+  benchmarkKwh: {
+    tiny: 3000,
+    small: 4500,
+    familiar: 6500,
   },
 
   efficiencyFactors: {

@@ -123,8 +123,7 @@ export default function EcoBuildInsightPage() {
     }
 
     const monthlyCost =
-      (consumption / 12) *
-      ENERGY_CONSTANTS.costPerKwh;
+      (consumption / 12) * ENERGY_CONSTANTS.costPerKwh;
 
     const yearlyCost = monthlyCost * 12;
 
@@ -173,8 +172,7 @@ export default function EcoBuildInsightPage() {
 
     if (!insulation) {
       const savings =
-        yearlyCost *
-        ENERGY_CONSTANTS.roiSavings.insulation;
+        yearlyCost * ENERGY_CONSTANTS.roiSavings.insulation;
 
       roi.push({
         label: "Aislamiento térmico",
@@ -191,8 +189,7 @@ export default function EcoBuildInsightPage() {
 
     if (windows === "simple") {
       const savings =
-        yearlyCost *
-        ENERGY_CONSTANTS.roiSavings.windows;
+        yearlyCost * ENERGY_CONSTANTS.roiSavings.windows;
 
       roi.push({
         label: "Doble vidrio",
@@ -336,8 +333,8 @@ export default function EcoBuildInsightPage() {
 
         <p className="mt-4 max-w-2xl leading-8 text-text-secondary">
           Estimá el consumo energético de tu vivienda y descubrí
-          oportunidades reales para reducir costos mediante eficiencia,
-          aislamiento y soluciones sustentables.
+          oportunidades reales para reducir costos mediante
+          eficiencia, aislamiento y soluciones sustentables.
         </p>
       </section>
 
@@ -376,9 +373,13 @@ export default function EcoBuildInsightPage() {
                 Buenos Aires
               </option>
 
-              <option value="cordoba">Córdoba</option>
+              <option value="cordoba">
+                Córdoba
+              </option>
 
-              <option value="mendoza">Mendoza</option>
+              <option value="mendoza">
+                Mendoza
+              </option>
             </select>
           </div>
 
@@ -394,11 +395,17 @@ export default function EcoBuildInsightPage() {
               }
               className="w-full rounded-lg border p-2"
             >
-              <option value="tiny">Tiny house</option>
+              <option value="tiny">
+                Tiny house
+              </option>
 
-              <option value="small">Casa pequeña</option>
+              <option value="small">
+                Casa pequeña
+              </option>
 
-              <option value="familiar">Casa familiar</option>
+              <option value="familiar">
+                Casa familiar
+              </option>
             </select>
           </div>
 
@@ -471,12 +478,18 @@ export default function EcoBuildInsightPage() {
             <div className="mt-4 space-y-2">
               <p>
                 Consumo anual estimado:
-                <strong> {result.consumption} kWh</strong>
+                <strong>
+                  {" "}
+                  {result.consumption} kWh
+                </strong>
               </p>
 
               <p>
                 Costo mensual estimado:
-                <strong> ${result.cost}</strong>
+                <strong>
+                  {" "}
+                  ${result.cost}
+                </strong>
               </p>
             </div>
           </div>
@@ -626,8 +639,9 @@ export default function EcoBuildInsightPage() {
           {/* Methodology */}
           <SectionCard title="¿Cómo se calcula esta estimación?">
             <p className="text-text-secondary">
-              EcoBuild utiliza estimaciones orientativas basadas en
-              superficie, ubicación y mejoras energéticas seleccionadas.
+              EcoBuild utiliza estimaciones orientativas basadas
+              en superficie, ubicación y mejoras energéticas
+              seleccionadas.
             </p>
 
             <ul className="mt-5 space-y-3 text-sm leading-6 text-text-secondary">
@@ -640,18 +654,18 @@ export default function EcoBuildInsightPage() {
               </li>
 
               <li>
-                • Impacto de aislamiento térmico, paneles solares
-                y tipo de ventanas.
+                • Impacto de aislamiento térmico, paneles
+                solares y tipo de ventanas.
               </li>
 
               <li>
-                • Comparación contra un benchmark estimado para
-                viviendas similares.
+                • Comparación contra un benchmark estimado
+                para viviendas similares.
               </li>
 
               <li>
-                • Resultados orientativos que no reemplazan una
-                evaluación técnica profesional.
+                • Resultados orientativos que no reemplazan
+                una evaluación técnica profesional.
               </li>
             </ul>
           </SectionCard>
@@ -659,7 +673,8 @@ export default function EcoBuildInsightPage() {
           {/* Action Plan */}
           <SectionCard title="Plan sugerido de mejora">
             <p className="text-text-secondary">
-              Próximos pasos recomendados según tu configuración actual.
+              Próximos pasos recomendados según tu
+              configuración actual.
             </p>
 
             <div className="mt-5 grid gap-4 md:grid-cols-3">
@@ -736,7 +751,8 @@ export default function EcoBuildInsightPage() {
                       </p>
 
                       <p>
-                        Retorno estimado: {item.payback} años
+                        Retorno estimado:{" "}
+                        {item.payback} años
                       </p>
                     </div>
                   </Card>
@@ -748,8 +764,9 @@ export default function EcoBuildInsightPage() {
           {/* Download Report */}
           <SectionCard title="Descargar reporte energético">
             <p className="text-text-secondary">
-              Exportá este análisis para guardarlo, compartirlo o
-              utilizarlo como referencia para futuras mejoras.
+              Exportá este análisis para guardarlo,
+              compartirlo o utilizarlo como referencia para
+              futuras mejoras.
             </p>
 
             <button
@@ -763,7 +780,8 @@ export default function EcoBuildInsightPage() {
           {/* Energy Readiness */}
           <SectionCard title="Nivel de preparación energética">
             <p className="text-text-secondary">
-              Resumen general del desempeño energético estimado.
+              Resumen general del desempeño energético
+              estimado.
             </p>
 
             <div className="mt-5 grid gap-4 md:grid-cols-3">
@@ -812,8 +830,9 @@ export default function EcoBuildInsightPage() {
             </h3>
 
             <p className="mt-2 text-text-secondary">
-              TinyWiki puede ayudarte a evaluar mejoras reales para tu
-              vivienda, incluyendo ahorro estimado y retorno de inversión.
+              TinyWiki puede ayudarte a evaluar mejoras reales
+              para tu vivienda, incluyendo ahorro estimado y
+              retorno de inversión.
             </p>
 
             <Link
