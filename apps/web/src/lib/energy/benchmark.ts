@@ -1,6 +1,11 @@
+
 import { ENERGY_CONSTANTS } from "./constants";
 
-export function getBenchmark(housingType: string) {
+export type BenchmarkHousingType = "tiny" | "small" | "familiar";
+
+export function getBenchmark(
+  housingType: BenchmarkHousingType,
+): number {
   switch (housingType) {
     case "tiny":
       return ENERGY_CONSTANTS.benchmarkKwh.tiny;
@@ -8,27 +13,43 @@ export function getBenchmark(housingType: string) {
     case "small":
       return ENERGY_CONSTANTS.benchmarkKwh.small;
 
-    default:
+    case "familiar":
       return ENERGY_CONSTANTS.benchmarkKwh.familiar;
+
+    default: {
+      const invalidHousingType: never = housingType;
+      throw new RangeError(
+        `Tipo de vivienda no válido: ${invalidHousingType}`,
+      );
+    }
   }
 }
 
 export function getBenchmarkStatus(
   consumption: number,
   benchmark: number,
-) {
+): string {
   return consumption <= benchmark
-    ? "Mejor que el promedio"
-    : "Mayor consumo que el promedio";
+    ? "Dentro de la referencia estimada"
+    : "Por encima de la referencia estimada";
 }
 
 export function getBenchmarkMessage(
   consumption: number,
   benchmark: number,
-) {
+): string {
   if (consumption <= benchmark) {
-    return "Tu vivienda muestra un desempeño energético favorable frente al promedio estimado.";
+    return (
+      "El consumo calculado está dentro del umbral de referencia " +
+      "configurado para esta categoría de vivienda. Es una comparación " +
+      "orientativa, no un promedio estadístico validado."
+    );
   }
 
-  return "Existen oportunidades de mejora para acercar el consumo al promedio energético estimado.";
+  return (
+    "El consumo calculado supera el umbral de referencia configurado " +
+    "para esta categoría de vivienda. Puede ser útil evaluar mejoras " +
+    "energéticas. La comparación es orientativa, no un promedio " +
+    "estadístico validado."
+  );
 }

@@ -1,3 +1,4 @@
+
 import { cityFactors, type CityKey } from "./cityFactors";
 
 import {
@@ -41,7 +42,7 @@ export type ROI = {
   label: string;
   cost: number;
   yearlySavings: number;
-  payback: number;
+  payback: number | null;
 };
 
 export type EcoBuildResult = {
@@ -82,12 +83,114 @@ const HOUSING_LABELS: Record<HousingType, string> = {
   familiar: "Casa familiar",
 };
 
-export function calculateEcoBuild(input: EcoBuildInput): EcoBuildResult {
-  const { size, city, housingType, insulation, solar, windows } = input;
+const VALID_HOUSING_TYPES: readonly string[] = [
+  "tiny",
+  "small",
+  "familiar",
+];
+
+const VALID_WINDOW_TYPES: readonly string[] = [
+  "simple",
+  "double",
+];
+
+function validateInput(input: EcoBuildInput): void {
+  if (!Number.isFinite(input.size) || input.size <= 0) {
+    throw new RangeError(
+      "La superficie debe ser un número finito mayor que cero.",
+    );
+  }
+
+  if (
+    !Object.prototype.hasOwnProperty.call(cityFactors, input.city)
+  ) {
+    throw new RangeError("La ciudad seleccionada no es válida.");
+  }
+
+  if (!VALID_HOUSING_TYPES.includes(input.housingType)) {
+    throw new RangeError(
+      "El tipo de vivienda seleccionado no es válido.",
+    );
+  }
+
+  if (!VALID_WINDOW_TYPES.includes(input.windows)) {
+    throw new RangeError(
+      "El tipo de ventanas seleccionado no es válido.",
+    );
+  }
+
+  if (
+    typeof input.insulation !== "boolean" ||
+    typeof input.solar !== "boolean"
+  ) {
+    throw new TypeError(
+      "Las opciones de mejoras energéticas deben ser booleanas.",
+    );
+  }
+}
+
+function calculatePayback(
+  cost: number,
+  yearlySavings: number,
+): number | null {
+  if (
+    !Number.isFinite(cost) ||
+    cost <= 0 ||
+    !Number.isFinite(yearlySavings) ||
+    yearlySavings <= 0 ||
+    Math.round(yearlySavings) <= 0
+  ) {
+    return null;
+  }
+
+  const years = cost / yearlySavings;
+
+  if (!Number.isFinite(years)) {
+    return null;
+  }
+
+  return Math.max(1, Math.round(years));
+}
+
+function createROI(
+  label: string,
+  cost: number,
+  yearlySavings: number,
+): ROI {
+  if (!Number.isFinite(yearlySavings)) {
+    throw new RangeError(
+      "No se pudo calcular un ahorro anual finito.",
+    );
+  }
+
+  return {
+    label,
+    cost,
+    yearlySavings: Math.max(0, Math.round(yearlySavings)),
+    payback: calculatePayback(cost, yearlySavings),
+  };
+}
+
+export function calculateEcoBuild(
+  input: EcoBuildInput,
+): EcoBuildResult {
+  validateInput(input);
+
+  const {
+    size,
+    city,
+    housingType,
+    insulation,
+    solar,
+    windows,
+  } = input;
 
   const selectedCity = cityFactors[city];
 
-  let consumption = size * ENERGY_CONSTANTS.baseKwhPerM2 * selectedCity.factor;
+  let consumption =
+    size *
+    ENERGY_CONSTANTS.baseKwhPerM2 *
+    selectedCity.factor;
 
   // Ajuste por tipo de vivienda
   if (housingType === "tiny") {
@@ -111,11 +214,27 @@ export function calculateEcoBuild(input: EcoBuildInput): EcoBuildResult {
     consumption *= ENERGY_CONSTANTS.efficiencyFactors.doubleWindows;
   }
 
-  const monthlyCost = (consumption / 12) * ENERGY_CONSTANTS.costPerKwh;
+  if (!Number.isFinite(consumption) || consumption <= 0) {
+    throw new RangeError(
+      "El consumo calculado está fuera del rango válido.",
+    );
+  }
+
+  const monthlyCost =
+    (consumption / 12) * ENERGY_CONSTANTS.costPerKwh;
 
   const yearlyCost = monthlyCost * 12;
 
-  // Recommendations
+  if (
+    !Number.isFinite(monthlyCost) ||
+    !Number.isFinite(yearlyCost)
+  ) {
+    throw new RangeError(
+      "El costo energético calculado está fuera del rango válido.",
+    );
+  }
+
+  // Recomendaciones
   const recommendations: string[] = [];
 
   if (!insulation) {
@@ -136,7 +255,7 @@ export function calculateEcoBuild(input: EcoBuildInput): EcoBuildResult {
     );
   }
 
-  // ROI
+  // Retorno de inversión orientativo
   const roi: ROI[] = [];
 
   if (!solar) {
@@ -145,46 +264,42 @@ export function calculateEcoBuild(input: EcoBuildInput): EcoBuildResult {
       ENERGY_CONSTANTS.roiSavings.solar *
       selectedCity.solarEfficiency;
 
-    roi.push({
-      label: "Paneles solares",
-      cost: ENERGY_CONSTANTS.roiCosts.solar,
-      yearlySavings: Math.round(savings),
-      payback: Math.max(
-        1,
-        Math.round(ENERGY_CONSTANTS.roiCosts.solar / savings),
+    roi.push(
+      createROI(
+        "Paneles solares",
+        ENERGY_CONSTANTS.roiCosts.solar,
+        savings,
       ),
-    });
+    );
   }
 
   if (!insulation) {
-    const savings = yearlyCost * ENERGY_CONSTANTS.roiSavings.insulation;
+    const savings =
+      yearlyCost * ENERGY_CONSTANTS.roiSavings.insulation;
 
-    roi.push({
-      label: "Aislamiento térmico",
-      cost: ENERGY_CONSTANTS.roiCosts.insulation,
-      yearlySavings: Math.round(savings),
-      payback: Math.max(
-        1,
-        Math.round(ENERGY_CONSTANTS.roiCosts.insulation / savings),
+    roi.push(
+      createROI(
+        "Aislamiento térmico",
+        ENERGY_CONSTANTS.roiCosts.insulation,
+        savings,
       ),
-    });
+    );
   }
 
   if (windows === "simple") {
-    const savings = yearlyCost * ENERGY_CONSTANTS.roiSavings.windows;
+    const savings =
+      yearlyCost * ENERGY_CONSTANTS.roiSavings.windows;
 
-    roi.push({
-      label: "Doble vidrio",
-      cost: ENERGY_CONSTANTS.roiCosts.windows,
-      yearlySavings: Math.round(savings),
-      payback: Math.max(
-        1,
-        Math.round(ENERGY_CONSTANTS.roiCosts.windows / savings),
+    roi.push(
+      createROI(
+        "Doble vidrio",
+        ENERGY_CONSTANTS.roiCosts.windows,
+        savings,
       ),
-    });
+    );
   }
 
-  // Energy score
+  // Puntaje energético
   let score: number = ENERGY_CONSTANTS.score.base;
 
   if (insulation) {
@@ -209,7 +324,7 @@ export function calculateEcoBuild(input: EcoBuildInput): EcoBuildResult {
     efficiency = "Media";
   }
 
-  // Derived insights
+  // Indicadores derivados
   const summary = generateSummary({
     insulation,
     solar,
@@ -227,15 +342,29 @@ export function calculateEcoBuild(input: EcoBuildInput): EcoBuildResult {
 
   const energyProfile = getEnergyProfile(score);
 
-  const mainRecommendation = getMainRecommendation(insulation, solar, windows);
+  const mainRecommendation = getMainRecommendation(
+    insulation,
+    solar,
+    windows,
+  );
 
   const benchmark = getBenchmark(housingType);
 
-  const benchmarkStatus = getBenchmarkStatus(consumption, benchmark);
+  const benchmarkStatus = getBenchmarkStatus(
+    consumption,
+    benchmark,
+  );
 
-  const benchmarkMessage = getBenchmarkMessage(consumption, benchmark);
+  const benchmarkMessage = getBenchmarkMessage(
+    consumption,
+    benchmark,
+  );
 
-  const actionPlan = getActionPlan(insulation, solar, windows);
+  const actionPlan = getActionPlan(
+    insulation,
+    solar,
+    windows,
+  );
 
   const readinessLevel = getReadinessLevel(score);
 
@@ -245,7 +374,6 @@ export function calculateEcoBuild(input: EcoBuildInput): EcoBuildResult {
 
   return {
     consumption: Math.round(consumption),
-
     cost: Math.round(monthlyCost),
 
     recommendations,
@@ -253,7 +381,6 @@ export function calculateEcoBuild(input: EcoBuildInput): EcoBuildResult {
 
     score,
     efficiency,
-
     cityLabel: selectedCity.label,
 
     summary,
@@ -263,7 +390,6 @@ export function calculateEcoBuild(input: EcoBuildInput): EcoBuildResult {
 
     energyProfile,
     mainRecommendation,
-
     housingLabel: HOUSING_LABELS[housingType],
 
     benchmark,
@@ -271,9 +397,7 @@ export function calculateEcoBuild(input: EcoBuildInput): EcoBuildResult {
     benchmarkMessage,
 
     actionTitle: actionPlan.title,
-
     actionImpact: actionPlan.impact,
-
     actionNextStep: actionPlan.nextStep,
 
     readinessLevel,
