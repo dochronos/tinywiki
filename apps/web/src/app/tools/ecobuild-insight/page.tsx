@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { SectionCard } from "@/components/ui/section-card";
@@ -11,6 +10,8 @@ import {
   type HousingType,
   type WindowType,
 } from "@/lib/energy/ecobuild";
+
+const ECOBUILD_REQUEST_KEY = "tinywiki:ecobuild-request";
 
 export default function EcoBuildInsightPage() {
   const [size, setSize] = useState<number>(0);
@@ -49,6 +50,37 @@ export default function EcoBuildInsightPage() {
 
     setValidationError(null);
     setResult(nextResult);
+  }
+
+  function requestPersonalizedAnalysis() {
+    if (!result) return;
+
+    const requestData = {
+      size,
+      city: result.cityLabel,
+      housingType: result.housingLabel,
+      insulation,
+      solar,
+      windows,
+      consumption: result.consumption,
+      monthlyCost: result.cost,
+      score: result.score,
+      recommendations: result.recommendations,
+      generatedAt: new Date().toISOString(),
+    };
+
+    try {
+      sessionStorage.setItem(
+        ECOBUILD_REQUEST_KEY,
+        JSON.stringify(requestData),
+      );
+
+      window.location.href = "/services/energy-analysis";
+    } catch {
+      setValidationError(
+        "No se pudieron preparar los resultados para la solicitud. Intentá nuevamente.",
+      );
+    }
   }
 
   return (
@@ -483,12 +515,13 @@ export default function EcoBuildInsightPage() {
               incluyendo ahorro estimado y retorno de inversión.
             </p>
 
-            <Link
-              href="/services/energy-analysis"
+            <button
+              type="button"
+              onClick={requestPersonalizedAnalysis}
               className="mt-4 inline-block rounded-2xl bg-primary px-5 py-3 text-white transition hover:opacity-90"
             >
               Solicitar análisis
-            </Link>
+            </button>
           </div>
         </section>
       )}
