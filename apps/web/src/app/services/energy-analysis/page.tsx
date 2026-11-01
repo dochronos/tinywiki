@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -69,9 +68,7 @@ function parseRequest(raw: string | null): EcoBuildRequest | null {
       typeof value.score !== "number" ||
       !Number.isFinite(value.score) ||
       !Array.isArray(value.recommendations) ||
-      !value.recommendations.every(
-        (item: unknown) => typeof item === "string",
-      )
+      !value.recommendations.every((item: unknown) => typeof item === "string")
     ) {
       return null;
     }
@@ -88,9 +85,7 @@ function parseRequest(raw: string | null): EcoBuildRequest | null {
       score: value.score,
       recommendations: value.recommendations,
       generatedAt:
-        typeof value.generatedAt === "string"
-          ? value.generatedAt
-          : undefined,
+        typeof value.generatedAt === "string" ? value.generatedAt : undefined,
     };
   } catch {
     return null;
@@ -113,7 +108,7 @@ CONFIGURACIÓN ACTUAL
 
 RESULTADOS DE ECOBUILD INSIGHT
 - Consumo anual estimado: ${request.consumption} kWh
-- Costo mensual estimado: ${request.monthlyCost}
+- Costo mensual estimado: USD ${request.monthlyCost}
 - Puntaje energético: ${request.score}/100
 - Recomendaciones: ${
         request.recommendations.length > 0
@@ -190,9 +185,7 @@ export default function AnalisisEnergeticoPage() {
 
       {/* BENEFITS */}
       <section className="mt-12">
-        <h2 className="text-2xl font-semibold">
-          ¿Qué incluye el análisis?
-        </h2>
+        <h2 className="text-2xl font-semibold">¿Qué incluye el análisis?</h2>
 
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           <Card>
@@ -227,9 +220,7 @@ export default function AnalisisEnergeticoPage() {
 
       {/* CTA */}
       <section className="mt-12 rounded-2xl bg-neutral-100 p-6">
-        <h2 className="text-2xl font-semibold">
-          Solicitar análisis
-        </h2>
+        <h2 className="text-2xl font-semibold">Solicitar análisis</h2>
 
         <p className="mt-3 text-neutral-700">
           {request
@@ -250,10 +241,17 @@ export default function AnalisisEnergeticoPage() {
             </p>
 
             <p className="mt-1 text-text-secondary">
-              Costo mensual estimado: ${request.monthlyCost}
+              Costo mensual estimado: USD {request.monthlyCost}
             </p>
           </Card>
         )}
+
+        <p className="mt-3 text-sm text-text-secondary">
+          Los valores económicos son estimaciones orientativas basadas en
+          parámetros internos de EcoBuild Insight. Están expresados en dólares
+          estadounidenses (USD) y no representan cotizaciones comerciales ni
+          garantizan ahorros o plazos de recuperación.
+        </p>
 
         <a
           href={emailHref}
@@ -263,8 +261,8 @@ export default function AnalisisEnergeticoPage() {
         </a>
 
         <p className="mt-3 text-sm text-neutral-600">
-          Se abrirá tu aplicación de correo con un mensaje preparado
-          que podés revisar y editar antes de enviarlo.
+          Se abrirá tu aplicación de correo con un mensaje preparado que podés
+          revisar y editar antes de enviarlo.
         </p>
       </section>
     </main>

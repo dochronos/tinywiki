@@ -70,10 +70,7 @@ export default function EcoBuildInsightPage() {
     };
 
     try {
-      sessionStorage.setItem(
-        ECOBUILD_REQUEST_KEY,
-        JSON.stringify(requestData),
-      );
+      sessionStorage.setItem(ECOBUILD_REQUEST_KEY, JSON.stringify(requestData));
 
       window.location.href = "/services/energy-analysis";
     } catch {
@@ -231,8 +228,8 @@ export default function EcoBuildInsightPage() {
               </p>
 
               <p>
-                Costo mensual estimado:
-                <strong> ${result.cost}</strong>
+                Costo mensual estimado (USD):
+                <strong> USD {result.cost}</strong>
               </p>
             </div>
           </div>
@@ -281,11 +278,17 @@ export default function EcoBuildInsightPage() {
 
               <Card>
                 <p className="text-sm text-text-secondary">
-                  Ahorro potencial anual
+                  Suma orientativa de ahorros individuales (USD/año)
                 </p>
 
                 <p className="mt-2 text-lg font-semibold">
-                  ${result.potentialSavings}
+                  USD {result.potentialSavings}
+                </p>
+
+                <p className="mt-2 text-xs leading-5 text-text-secondary">
+                  Es la suma de estimaciones individuales para cada mejora. No
+                  representa un ahorro combinado garantizado, ya que los efectos
+                  de las intervenciones pueden superponerse.
                 </p>
               </Card>
             </div>
@@ -315,9 +318,10 @@ export default function EcoBuildInsightPage() {
           </SectionCard>
 
           {/* Benchmark */}
-          <SectionCard title="Comparación energética">
+          <SectionCard title="Referencia energética">
             <p className="mt-2 text-text-secondary">
-              Comparación estimada frente a viviendas similares.
+              Comparación orientativa entre el consumo calculado y un umbral de
+              referencia configurado según el tipo de vivienda.
             </p>
 
             <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -330,7 +334,9 @@ export default function EcoBuildInsightPage() {
               </Card>
 
               <Card>
-                <p className="text-sm text-text-secondary">Promedio estimado</p>
+                <p className="text-sm text-text-secondary">
+                  Umbral de referencia
+                </p>
 
                 <p className="mt-2 text-lg font-semibold">
                   {result.benchmark} kWh
@@ -371,8 +377,9 @@ export default function EcoBuildInsightPage() {
               </li>
 
               <li>
-                • Comparación contra un benchmark estimado para viviendas
-                similares.
+                • Comparación contra un umbral de referencia configurado según
+                la categoría de vivienda. Este valor no representa un promedio
+                estadístico ni considera ajustes por superficie o ciudad.
               </li>
 
               <li>
@@ -425,7 +432,17 @@ export default function EcoBuildInsightPage() {
           {/* ROI */}
           {result.roi.length > 0 && (
             <div>
-              <h3 className="font-semibold">Impacto económico</h3>
+              <h3 className="font-semibold">
+                Estimaciones económicas por mejora
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-text-secondary">
+                Los costos y ahorros se expresan en dólares estadounidenses
+                (USD) y se basan en parámetros internos orientativos. No
+                representan cotizaciones comerciales ni garantizan ahorros o
+                plazos de recuperación. Los valores reales dependen de las
+                características de cada vivienda, los equipos, la instalación y
+                las condiciones del mercado.
+              </p>
 
               <div className="mt-3 space-y-3">
                 {result.roi.map((item, index) => (
@@ -433,9 +450,9 @@ export default function EcoBuildInsightPage() {
                     <p className="font-medium">{item.label}</p>
 
                     <div className="mt-2 space-y-1 text-sm text-neutral-700">
-                      <p>Costo estimado: ${item.cost}</p>
+                      <p>Costo estimado: USD {item.cost}</p>
 
-                      <p>Ahorro anual: ${item.yearlySavings}</p>
+                      <p>Ahorro anual estimado: USD {item.yearlySavings}</p>
 
                       <p>
                         Retorno estimado:{" "}
