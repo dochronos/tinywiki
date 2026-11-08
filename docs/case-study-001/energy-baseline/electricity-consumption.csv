@@ -1,0 +1,14 @@
+year,billing_period,consumption_kwh,csv_importe_ars,reading_start_date,reading_end_date,source,notes
+2024,5,571,19270.8,,,CSV EDEA,Importe CSV; interpretation not independently verified for this period
+2024,6,359,17884.44,,,CSV EDEA,Importe CSV; interpretation not independently verified for this period
+2025,1,363,19677.26,,,CSV EDEA,Importe CSV; interpretation not independently verified for this period
+2025,2,306,18656.5,,,CSV EDEA,Importe CSV; interpretation not independently verified for this period
+2025,3,374,23458.9,,,CSV EDEA,Importe CSV; interpretation not independently verified for this period
+2025,4,320,22130.23,,,CSV EDEA,Importe CSV; interpretation not independently verified for this period
+2025,5,442,26998.75,,,CSV EDEA,Importe CSV; interpretation not independently verified for this period
+2025,6,339,26171.37,,,CSV EDEA,Importe CSV; interpretation not independently verified for this period
+2026,1,465,33612.84,,,CSV EDEA,CSV amount matches invoice installment 1 in portal; PDF not available in supplied files
+2026,2,297,26674.85,2026-01-05,2026-03-05,CSV EDEA + invoice PDFs,CSV amount matches installment 1; Reading dates transcribed from invoice documentation
+2026,3,325,37928.53,2026-03-05,2026-05-04,CSV EDEA + invoice PDFs,CSV amount matches installment 1
+2026,4,321,41224.39,2026-05-04,2026-07-02,CSV EDEA + invoice PDFs,CSV amount matches installment 1
+2026,5,370,47330.44,2026-07-02,2026-09-03,CSV EDEA + invoice PDFs,CSV amount matches both installments; do not treat as bimonthly total billing
