@@ -1,33 +1,80 @@
-# Caso de Estudio #001 — Línea base eléctrica (Sprint 41.1)
+# Caso de Estudio #001 — Línea base eléctrica histórica (Sprint 42)
 
 ## Alcance
-Paquete inicial de consolidación anonimizada de:
-- 13 registros bimestrales del CSV de historial EDEA.
-- 12 registros de facturas/pagos visibles en EDEA Web (seis períodos, dos cuotas por período).
 
-No incluye dirección, titular, número de cuenta, número de medidor ni códigos de pago.
+Consolidación documental de facturas EDEA recuperadas para reconstruir el consumo eléctrico y la facturación de la vivienda. La cobertura disponible comprende períodos entre septiembre de 2016 y noviembre de 2026, con una brecha documental explícita entre 2020 y 2024.
+
+El objetivo es establecer una base histórica trazable para futuros análisis energéticos y económicos, sin completar períodos ausentes mediante interpolaciones ni estimaciones no verificadas.
 
 ## Archivos
-- `electricity-consumption.csv`: un registro por período bimestral de consumo.
-- `electricity-billing.csv`: un registro por factura/cuota.
+
+- `document-inventory.csv`: inventario anonimizado de los PDF recuperados. Conserva copias repetidas para trazabilidad.
+- `electricity-consumption.csv`: un registro por período de consumo, con fechas de lectura y referencia documental.
+- `electricity-billing.csv`: un registro por factura/cuota identificada en los PDF.
+- `data-quality-report.md`: resumen de cobertura, controles, conciliación y limitaciones.
+- `historical-data-methodology.md`: metodología específica de consolidación histórica.
+- `sources-and-methodology.md`: documento metodológico preexistente, conservado sin cambios.
+
+## Cobertura histórica recuperada
+
+- 2016: un período (06/16).
+- 2017: seis períodos.
+- 2018: seis períodos.
+- 2019: seis períodos.
+- 2020: cinco períodos (01/20 a 05/20).
+- 2021–2023: sin facturas recuperadas.
+- 2024: tres períodos (04/24 a 06/24).
+- 2025: seis períodos.
+- 2026: seis períodos (01/26 a 06/26).
+
+La base contiene:
+
+- 39 períodos únicos de consumo.
+- 78 registros de facturas/cuotas.
+- 85 archivos PDF inventariados.
+- 15 documentos marcados como copias repetidas, conservados para trazabilidad.
+- 17.089 kWh de consumo sumado en los períodos documentados.
+
+El primer período de lectura disponible comienza el 01/09/2016 y el último finaliza el 02/11/2026.
+
+Existe una brecha cronológica de 1.337 días entre el final del período 05/20 (03/09/2020) y el inicio del período 04/24 (02/05/2024).
+
+El promedio aritmético de los 39 períodos documentados es 438,18 kWh por período. No representa un promedio mensual ni un consumo continuo para todo el intervalo histórico.
 
 ## Reglas de interpretación
-1. `consumption_kwh` es el consumo del período bimestral. No se duplica por existir dos cuotas.
-2. `electricity-billing.csv` registra cada cuota por separado. Los importes de ambas cuotas se suman únicamente cuando se analiza el total facturado/pagado del período.
-3. `csv_importe_ars` conserva literalmente la columna `Importe` del CSV EDEA. Para los períodos 2026-01 a 2026-05 coincide con el importe de la cuota 1 del portal, excepto 2026-05 donde también coincide con cuota 2. No se asume que sea el total bimestral facturado.
-4. Fechas de lectura solo se incluyen donde se han identificado en documentación de factura; los demás campos quedan vacíos, no se estiman.
-5. Estado y fecha de pago se transcriben del listado EDEA Web proporcionado por el usuario. Los importes y vencimientos de períodos 2025-06 y 2026-01 no cuentan con PDF en este paquete.
-6. Los importes son pesos nominales de cada fecha. No están ajustados por inflación.
-7. No se calcula aún una tarifa efectiva validada por kWh. Para ello debe definirse qué componentes incluir y reconciliar el desglose de facturación.
 
-## Observaciones de validación
-- Los dos CSV suministrados son duplicados idénticos; se utilizó una sola copia lógica.
-- Los dos PDF de cada período 2026-02 a 2026-05 corresponden a cuotas 1 y 2, no a consumos independientes.
-- Para 2026-05, ambas facturas muestran 370 kWh y $47.330,44 cada una; el listado EDEA Web las marca como cobradas. Por tanto, total de ambas cuotas: $94.660,88, sin duplicar los 370 kWh.
-- La tarifa visible en los PDF es T1R; el período 2026-05 identifica segmentación N2/SEF y cuadro tarifario Res. MyP 682/26.
+1. `consumption_kwh` representa el consumo de un período de lectura. No se duplica por existir dos cuotas.
+2. `electricity-billing.csv` conserva cada cuota individualmente. Los importes no se interpretan automáticamente como precio de energía ni como costo total del período.
+3. `csv_importe_ars` conserva el valor original del campo `Importe` del CSV histórico EDEA cuando está disponible. En los 13 períodos comparables, coincide con el importe de la primera cuota en 8 casos y con el importe individual de ambas cuotas en 5 casos. No coincide con la suma de las dos cuotas en ninguno de esos casos.
+4. El comportamiento observado en esos 13 períodos no se generaliza automáticamente a toda la historia de facturación.
+5. Las fechas de lectura se transcriben de los estados anterior/actual del medidor cuando aparecen en las facturas. Se almacenan como `YYYY-MM-DD`.
+6. No se infieren estados de pago a partir de la emisión o vencimiento. `payment_status` utiliza `not_documented` cuando no existe evidencia de pago en las fuentes utilizadas.
+7. Los importes son pesos nominales. No están ajustados por inflación.
+8. Los años y períodos sin documentación permanecen ausentes. No se interpolan, estiman ni anualizan.
+9. Los documentos repetidos se conservan en el inventario, pero no generan registros adicionales en los datasets de consumo o facturación.
 
-## Pendientes
-- Obtener los PDF o desglose de 2025-06 y 2026-01.
-- Verificar fechas exactas de lectura para todos los períodos.
-- Solicitar a EDEA el historial de lecturas y/o facturación desglosada de períodos no descargables.
-- Aclarar formalmente el significado de la columna `Importe` del CSV para períodos anteriores.
+## Hallazgos de estructura documental
+
+- Algunos PDF contienen dos páginas y cada página corresponde a una cuota distinta. Por eso, cantidad de PDF y cantidad de facturas no son equivalentes.
+- En 2016 hay una copia repetida de la cuota 2 del período 06/16.
+- En 2019 y 2020, parte de la documentación contiene dos cuotas dentro del mismo PDF.
+- Los archivos individuales de 2026 incluyen copias de facturas ya presentes en el ZIP y copias repetidas de documentos del período 05/26. Se conservan en el inventario y no se vuelven a contar en la facturación consolidada.
+- Para 05/26, las copias `2026_document_78` y `2026_document_82` se identificaron como duplicados de `2026_document_77` y `2026_document_74`, respectivamente.
+
+## Estado de validación
+
+La consolidación superó los siguientes controles:
+
+- No se detectaron períodos de consumo duplicados.
+- Cada período de facturación tiene dos registros: cuota 1 y cuota 2.
+- No se detectaron claves duplicadas de facturación.
+- Todos los períodos de consumo tienen registros de facturación correspondientes.
+- Todas las referencias documentales de los datasets existen en el inventario.
+- La revisión cronológica identificó una brecha de 1.337 días y no detectó solapamientos.
+- La comparación económica de los 13 importes disponibles en el CSV histórico no produjo discrepancias exactas.
+
+La validación estructural y referencial está aprobada. La conciliación económica es parcial, porque 26 de los 39 períodos no tienen importe disponible en el CSV histórico. La revisión independiente de todos los conceptos tarifarios y la confirmación externa de EDEA no forman parte de esta validación.
+
+## Privacidad
+
+Los PDF originales no se incluyen en el repositorio. Los identificadores documentales son alias anonimizados; no se publican titular, domicilio, cuenta, medidor ni códigos de pago.
