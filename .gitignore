@@ -1,1 +1,24 @@
-.venv
+# Python virtual environments
+.venv/
+venv/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Case Study 001 - Original source documents
+data/case-study-001/source-archives/
+data/case-study-001/source-documents/
+
+# Local temporary extraction folders
+data/case-study-001/tmp/
+data/case-study-001/temp/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Operating system files
+.DS_Store
+Thumbs.db
