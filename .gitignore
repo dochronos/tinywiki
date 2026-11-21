@@ -22,3 +22,7 @@ __pycache__/
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# Case Study 001 - Private audit material
+data/case-study-001/private/
+data/case-study-001/inspect_invoice_pdfs.py
