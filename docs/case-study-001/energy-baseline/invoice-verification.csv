@@ -1,0 +1,6 @@
+﻿billing_period,reading_start_date,reading_end_date,invoice_consumption_kwh,calculated_consumption_kwh,csv_consumption_kwh,verification_status,verification_scope,notes
+2019-04,2019-05-06,2019-07-05,624,624,624,verified,invoice_printed_consumption_and_reading_arithmetic,Two installment documents represent one metering period
+2019-05,2019-07-05,2019-09-05,761,761,761,verified,invoice_printed_consumption_and_reading_arithmetic,Two installments in one source PDF
+2019-06,2019-09-05,2019-11-04,962,962,962,verified,invoice_printed_consumption_and_reading_arithmetic,Two installments in one source PDF
+2020-04,2020-05-04,2020-07-06,1078,1078,1078,verified,invoice_printed_consumption_and_reading_arithmetic,Two installments in one source PDF
+2020-05,2020-07-06,2020-09-03,1300,1300,1300,verified,invoice_printed_consumption_and_reading_arithmetic,Two installments in one source PDF

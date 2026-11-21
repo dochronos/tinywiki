@@ -79,6 +79,31 @@ Each documented billing period has two installment records, numbered 1 and 2.
 
 All 78 billing records have `payment_status` set to `not_documented`. This means payment evidence was not available in the sources used; it does not mean that the invoices were unpaid.
 
+## Targeted invoice-level consumption verification
+
+A documentary cross-check was completed for five selected consumption periods:
+
+| Billing period | Invoice consumption (kWh) | Calculated from meter readings (kWh) | Dataset consumption (kWh) | Result |
+|---|---:|---:|---:|---|
+| 2019-04 | 624 | 624 | 624 | Verified |
+| 2019-05 | 761 | 761 | 761 | Verified |
+| 2019-06 | 962 | 962 | 962 | Verified |
+| 2020-04 | 1,078 | 1,078 | 1,078 | Verified |
+| 2020-05 | 1,300 | 1,300 | 1,300 | Verified |
+
+All five selected periods matched across the invoice, the arithmetic difference between the printed meter readings, and `electricity-consumption.csv`.
+
+The verification involved six invoice documents for five unique metering periods. The two documents for 2019-04 represent separate installments of the same consumption period and are not counted as separate measurements.
+
+**Scope and limitations:**
+
+- The check confirms documentary and arithmetic consistency for these five periods.
+- It does not independently verify the physical meter or its accuracy.
+- It does not establish the cause of the recorded consumption levels.
+- It does not constitute a complete invoice-level re-audit of all 39 consumption periods.
+
+Detailed period-level results are available in `invoice-verification.csv`. Original invoices and personal identifiers are excluded from the public repository.
+
 ## Economic reconciliation with the original EDEA CSV
 
 The `csv_importe_ars` field was compared with the two installment amounts and their sum for each consumption period.

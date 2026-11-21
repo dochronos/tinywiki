@@ -51,6 +51,30 @@ The following structural and referential checks were performed:
 
 The chronological review identified one gap of 1,337 days between 2020-09-03 and 2024-05-02. No overlaps were detected.
 
+## Targeted invoice-level consumption verification
+
+A targeted documentary verification was performed for five consumption periods with comparatively high recorded consumption:
+
+- 2019-04: 624 kWh
+- 2019-05: 761 kWh
+- 2019-06: 962 kWh
+- 2020-04: 1,078 kWh
+- 2020-05: 1,300 kWh
+
+For each period, three values were compared:
+
+1. Consumption printed on the invoice.
+2. Consumption calculated as the difference between the current and previous meter readings.
+3. Consumption recorded in `electricity-consumption.csv`.
+
+All five periods matched across the three values. The results are recorded in `invoice-verification.csv`.
+
+The verification covered six invoice documents supporting five unique metering periods. For 2019-04, the two installments were found in separate PDF documents, but both refer to the same consumption measurement. For the other four periods, both installments were contained in a single PDF per period.
+
+The verification establishes consistency between the invoice's printed consumption, the arithmetic of the readings shown on the invoice, and the consolidated consumption dataset. It does not constitute an independent physical meter inspection, an assessment of meter accuracy, or an explanation of the recorded consumption levels.
+
+This was a targeted check, not a complete invoice-level re-audit of all 39 documented consumption periods. The five verified periods must not be taken as evidence that every historical record has undergone the same procedure.
+
 ## Economic reconciliation
 
 The `csv_importe_ars` field was compared with the amounts of installment 1, installment 2, and the sum of both installments for the same period.
