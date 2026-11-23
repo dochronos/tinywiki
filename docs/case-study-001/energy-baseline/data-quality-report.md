@@ -81,23 +81,32 @@ All 78 billing records have `payment_status` set to `not_documented`. This means
 
 ## Targeted invoice-level consumption verification
 
-A documentary cross-check was completed for five selected consumption periods:
+A documentary cross-check was completed for six selected billing/reading periods:
 
-| Billing period | Invoice consumption (kWh) | Calculated from meter readings (kWh) | Dataset consumption (kWh) | Result |
+| Period identifier | Invoice consumption (kWh) | Calculated from meter readings (kWh) | Dataset consumption (kWh) | Result |
 |---|---:|---:|---:|---|
 | 2019-04 | 624 | 624 | 624 | Verified |
 | 2019-05 | 761 | 761 | 761 | Verified |
 | 2019-06 | 962 | 962 | 962 | Verified |
 | 2020-04 | 1,078 | 1,078 | 1,078 | Verified |
 | 2020-05 | 1,300 | 1,300 | 1,300 | Verified |
+| 2026-05 | 370 | 370 | 370 | Verified |
 
-All five selected periods matched across the invoice, the arithmetic difference between the printed meter readings, and `electricity-consumption.csv`.
+All six selected periods matched across the invoice, the arithmetic difference between the printed meter readings, and `electricity-consumption.csv`.
 
-The verification involved six invoice documents for five unique metering periods. The two documents for 2019-04 represent separate installments of the same consumption period and are not counted as separate measurements.
+For billing-period label 05/26 (dataset key: 2026-05), the recorded 370 kWh correspond to the meter-reading interval from 2026-07-02 to 2026-09-03. The dataset key preserves the billing-period label; it does not identify calendar May 2026 as the consumption month.
+
+The verification involved eight invoice documents for six unique metering periods.
+
+For 2019-04, the two installments were found in separate PDF documents. For 2019-05, 2019-06, 2020-04, and 2020-05, both installments were contained in one PDF per period.
+
+For EDEA billing-period label 05/26 (dataset key: 2026-05), two separate installment PDFs were reviewed. Both display identical meter readings and the same consumption value of 370 kWh. The arithmetic difference between the printed readings also equals 370 kWh. These documents represent two billing installments for one billing/reading period, not two separate consumption measurements.
+
+The reviewed installment PDFs for billing-period label 05/26 are EDEA-issued documents obtained through EDEA email communications or its website. The inventory classifies the two files as loose uploads, while corresponding PDFs are also present in the current 2026 ZIP archive. This is a file-organization and inventory-mapping discrepancy; the issuer and source of the invoices are confirmed as EDEA.
 
 **Scope and limitations:**
 
-- The check confirms documentary and arithmetic consistency for these five periods.
+- The check confirms documentary and arithmetic consistency for these six periods.
 - It does not independently verify the physical meter or its accuracy.
 - It does not establish the cause of the recorded consumption levels.
 - It does not constitute a complete invoice-level re-audit of all 39 consumption periods.
@@ -128,7 +137,7 @@ The 26 periods without a CSV amount remain without a comparable value. Their inv
 
 ## Data interpretation and limitations
 
-- Consumption is recorded once per billing period, not once per installment.
+- Consumption is recorded once per billing/reading period, not once per installment. The EDEA billing-period label is distinct from the actual meter-reading interval; consumption dates must be interpreted using the recorded reading start and end dates.
 - Installment amounts are nominal ARS amounts as printed on each invoice. They are not inflation-adjusted.
 - No normalized ARS/kWh series is produced. Invoice totals can include fixed charges, energy charges, subsidies, taxes, and other levies.
 - Payment status is not inferred from invoice issuance or due dates. The value `not_documented` indicates absence of payment evidence in the reviewed sources.

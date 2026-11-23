@@ -10,7 +10,10 @@ Original PDFs are not redistributed in this public package. Document IDs in the 
 
 ## Unit of observation
 
-- Consumption dataset: one row per EDEA billing/reading period.
+- Consumption dataset: one row per EDEA billing period, with the associated meter-reading interval and recorded consumption.
+- `billing_period` preserves the period label printed by EDEA (for example, `05/26`). It must not be interpreted automatically as the calendar month in which the electricity was consumed.
+- `reading_start_date` and `reading_end_date` delimit the actual meter-reading interval associated with the recorded consumption.
+- `consumption_kwh` represents the consumption recorded over that reading interval. The interval may span calendar months and may not coincide with the billing-period label.
 - Billing dataset: one row per invoice installment.
 - Document inventory: one row per recovered PDF file, including repeated copies.
 
@@ -53,7 +56,7 @@ The chronological review identified one gap of 1,337 days between 2020-09-03 and
 
 ## Targeted invoice-level consumption verification
 
-A targeted documentary verification was performed for five consumption periods with comparatively high recorded consumption:
+An initial targeted documentary verification was performed for five consumption periods with comparatively high recorded consumption:
 
 - 2019-04: 624 kWh
 - 2019-05: 761 kWh
@@ -61,19 +64,33 @@ A targeted documentary verification was performed for five consumption periods w
 - 2020-04: 1,078 kWh
 - 2020-05: 1,300 kWh
 
+During Sprint 44, an additional EDEA billing period was reviewed as a documentary consistency check:
+
+- Billing-period label 05/26 (dataset key: 2026-05): 370 kWh recorded over the meter-reading interval from 2026-07-02 to 2026-09-03.
+
+The `2026-05` dataset key preserves the billing-period label; it does not mean that the 370 kWh were consumed during calendar May 2026. The associated reading interval is the relevant time span for interpreting this consumption value.
+
 For each period, three values were compared:
 
 1. Consumption printed on the invoice.
 2. Consumption calculated as the difference between the current and previous meter readings.
 3. Consumption recorded in `electricity-consumption.csv`.
 
-All five periods matched across the three values. The results are recorded in `invoice-verification.csv`.
+All six periods matched across the three values. The results are recorded in `invoice-verification.csv`.
 
-The verification covered six invoice documents supporting five unique metering periods. For 2019-04, the two installments were found in separate PDF documents, but both refer to the same consumption measurement. For the other four periods, both installments were contained in a single PDF per period.
+The verification covered eight invoice documents supporting six unique metering periods:
+
+- For 2019-04, the two installments were found in separate PDF documents.
+- For 2019-05, 2019-06, 2020-04, and 2020-05, both installments were contained in a single PDF per period.
+- For billing-period label 05/26 (dataset key: 2026-05), the two installments were found in separate PDF documents. Both display identical meter readings and the same consumption value of 370 kWh. The arithmetic difference between the printed readings also equals 370 kWh. These are two installment records for one billing/reading period, not two separate measurements.
+
+Installment invoices represent separate billing records, not separate consumption measurements. Their consumption values must not be added together.
+
+For billing-period label 05/26, the reviewed installment PDFs are EDEA-issued documents obtained through EDEA email communications or its website. The inventory classifies the two files as loose uploads, while corresponding PDFs are also present in the current 2026 ZIP archive. This is a file-organization and inventory-mapping discrepancy; the issuer and source of the invoices are confirmed as EDEA. It does not change the technical consistency result.
 
 The verification establishes consistency between the invoice's printed consumption, the arithmetic of the readings shown on the invoice, and the consolidated consumption dataset. It does not constitute an independent physical meter inspection, an assessment of meter accuracy, or an explanation of the recorded consumption levels.
 
-This was a targeted check, not a complete invoice-level re-audit of all 39 documented consumption periods. The five verified periods must not be taken as evidence that every historical record has undergone the same procedure.
+This was a targeted check, not a complete invoice-level re-audit of all 39 documented consumption periods. The six verified periods must not be taken as evidence that every historical record has undergone the same procedure.
 
 ## Economic reconciliation
 
